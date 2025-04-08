@@ -3,7 +3,9 @@ using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,9 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCityCostServices
            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<SpecialCityCostDTO>> GetAllSpecialCityCostAsync()
+        public async Task<IEnumerable<SpecialCityCostDTO>> GetAllSpecialCityCostAsync(Pramter pramter)
         {
-            return _mapper.Map<IEnumerable<SpecialCityCostDTO>>(await _unitOfWork.GetRepository<SpecialCityCost,int>().GetAllAsync());
+            return _mapper.Map<IEnumerable<SpecialCityCostDTO>>(await _unitOfWork.GetRepository<SpecialCityCost,int>().GetAllAsync(pramter));
         }
         public async Task<SpecialCityCostDTO> GetSpecialCityCostAsync(int id)
         {

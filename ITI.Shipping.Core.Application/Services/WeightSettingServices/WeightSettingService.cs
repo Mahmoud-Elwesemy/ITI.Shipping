@@ -2,7 +2,9 @@
 using ITI.Shipping.Core.Application.Abstraction.WeightSetting;
 using ITI.Shipping.Core.Application.Abstraction.WeightSetting.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,9 @@ namespace ITI.Shipping.Core.Application.Services.WeightSettingServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<WeightSettingDTO>> GetAllWeightSettingAsync()
+        public async Task<IEnumerable<WeightSettingDTO>> GetAllWeightSettingAsync(Pramter pramter)
         {
-            return _mapper.Map<IEnumerable<WeightSettingDTO>>(await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync());
+            return _mapper.Map<IEnumerable<WeightSettingDTO>>(await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync(pramter));
         }
         public async Task<WeightSettingDTO> GetWeightSettingAsync(int id)
         {

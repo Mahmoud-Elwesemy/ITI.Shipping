@@ -1,4 +1,5 @@
 ﻿using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.Repositories.contract;
 using ITI.Shipping.Infrastructure.Presistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,19 @@ namespace ITI.Shipping.Infrastructure.Presistence.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(Pramter pramter)
         {
-            return await _context.Set<T>().ToListAsync();
+            if(pramter.PageSize != null && pramter.PageNumber != null)
+            {
+                return await _context.Set<T>()
+                    .Skip((pramter.PageNumber.Value - 1) * pramter.PageSize.Value)
+                    .Take(pramter.PageSize.Value)
+                    .ToListAsync();
+            }
+            else
+            {
+                return await _context.Set<T>().ToListAsync();
+            }
         }
         public async Task<T?> GetByIdAsync(Tkey id)
         {
@@ -45,13 +56,5 @@ namespace ITI.Shipping.Infrastructure.Presistence.Repositories
             }
         }
 
-        // This Is A Generic Repository  That Contains The Basic CRUD Operations 
-        // That Can Be Performed On Any Entity Without ---- User Entity ----  
-
-
-        //public async Task<ApplicationUser?> GetUserByIdAsync(string id)
-        //{
-        //    return await _context.Set<ApplicationUser>().FirstOrDefaultAsync(user => user.Id == id);
-        //}
     }
 }

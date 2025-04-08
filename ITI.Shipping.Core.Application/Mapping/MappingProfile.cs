@@ -3,11 +3,13 @@ using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
+using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Product.Model;
 using ITI.Shipping.Core.Application.Abstraction.Region.Model;
 using ITI.Shipping.Core.Application.Abstraction.ShippingType.Model;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost.Model;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCourierRegion.Model;
+using ITI.Shipping.Core.Application.Abstraction.User.Model;
 using ITI.Shipping.Core.Application.Abstraction.WeightSetting.Model;
 using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
@@ -92,61 +94,67 @@ namespace ITI.Shipping.Core.Application.Mapping
             CreateMap<WeightSetting,WeightSettingDTO>().ReverseMap();
             #endregion
             #region  Configratio Of Product
+            //CreateMap<Product,ProductDTO>()
+            //    .ForMember(dest => dest.OrderId,opt => opt.MapFrom(src => src.OrderId))
+            //    .ReverseMap();
+
             CreateMap<Product,ProductDTO>().ReverseMap();
             #endregion
             #region Configratio Of Order
-            CreateMap<Order,OrderDTO>()
-                      // Basic Properties
-                      .ForMember(dest => dest.Id,opt => opt.MapFrom(src => src.Id))
-                      .ForMember(dest => dest.TotalWeight,opt => opt.MapFrom(src => src.TotalWeight))
-                      .ForMember(dest => dest.OrderCost,opt => opt.MapFrom(src => src.OrderCost))
-                      .ForMember(dest => dest.Notes,opt => opt.MapFrom(src => src.Notes))
-                      .ForMember(dest => dest.CreatedAt,opt => opt.MapFrom(src => src.CreatedAt))
-                      .ForMember(dest => dest.IsOutOfCityShipping,opt => opt.MapFrom(src => src.IsOutOfCityShipping))
+            CreateMap<Order,OrderWithProductsDto>().AfterMap((src,dest) =>
+            {
 
-                      // Foreign Keys & Related Entities
-                      .ForMember(dest => dest.CityId,opt => opt.MapFrom(src => src.CitySettingId))
-                      .ForMember(dest => dest.CityName,opt => opt.MapFrom(src => src.CitySetting != null ? src.CitySetting.Name : string.Empty))
-                      .ForMember(dest => dest.BranchId,opt => opt.MapFrom(src => src.BranchId))
-                      .ForMember(dest => dest.BranchName,opt => opt.MapFrom(src => src.Branch != null ? src.Branch.Name : string.Empty))
-                      .ForMember(dest => dest.RegionId,opt => opt.MapFrom(src => src.RegionId))
-                      .ForMember(dest => dest.RegionName,opt => opt.MapFrom(src => src.Region != null ? src.Region.Governorate : string.Empty))
+                dest.Branch = src.Branch?.Name;
+                dest.Region = src.Region?.Governorate;
+                dest.City = src.CitySetting?.Name;
+                dest.MerchantName = src.MerchantId;
+                dest.Status = src.Status.ToString();
+                dest.CustomerInfo = $"{src.CustomerName} {src.CustomerPhone1}";
 
-                      // Shipping Type
-                      .ForMember(dest => dest.ShippingTypeId,opt => opt.MapFrom(src => src.ShippingTypeId))
-                      .ForMember(dest => dest.ShippingTypeName,opt => opt.MapFrom(src => src.ShippingType != null ? src.ShippingType.Name : string.Empty))
-                      .ForMember(dest => dest.ShippingTypeBaseCost,opt => opt.MapFrom(src => src.ShippingType != null ? src.ShippingType.BaseCost : 0))
-                      .ForMember(dest => dest.ShippingTypeDuration,opt => opt.MapFrom(src => src.ShippingType != null ? src.ShippingType.Duration : 0))
+            }).ReverseMap();
 
-                      // Payment Type
-                      .ForMember(dest => dest.PaymentType,opt => opt.MapFrom(src => src.PaymentType))
-                      .ForMember(dest => dest.PaymentTypeName,opt => opt.MapFrom(src => src.PaymentType != null ? src.PaymentType.ToString() : string.Empty))
+            CreateMap<Order,updateOrderDto>().ReverseMap().ForMember(dest => dest.CitySettingId,opt => opt.MapFrom(src => src.City))
+            .ForMember(dest => dest.BranchId,opt => opt.MapFrom(src => src.Branch))
+            .ForMember(dest => dest.RegionId,opt => opt.MapFrom(src => src.Region))
+            .ForMember(dest => dest.ShippingTypeId,opt => opt.MapFrom(src => src.ShippingId))
+            .ForMember(dest => dest.PaymentType,opt => opt.MapFrom(src => src.PaymentType))
+            .ForMember(dest => dest.MerchantId,opt => opt.MapFrom(src => src.MerchantName))
+            .ForMember(dest => dest.Branch,opt => opt.Ignore())
+            .ForMember(dest => dest.Region,opt => opt.Ignore())
+            .ForMember(dest => dest.ShippingType,opt => opt.Ignore())
+            .ForMember(dest => dest.CitySetting,opt => opt.Ignore());
 
-                      // Merchant Info
-                      .ForMember(dest => dest.MerchantId,opt => opt.MapFrom(src => src.MerchantId))
-                      .ForMember(dest => dest.MerchantName,opt => opt.Ignore())
-
-                      // Customer Info
-                      .ForMember(dest => dest.CustomerName,opt => opt.MapFrom(src => src.CustomerName))
-                      .ForMember(dest => dest.CustomerPhone1,opt => opt.MapFrom(src => src.CustomerPhone1))
-                      .ForMember(dest => dest.CustomerAddress,opt => opt.MapFrom(src => src.CustomerAddress))
-                      .ForMember(dest => dest.CustomerEmail,opt => opt.MapFrom(src => src.CustomerEmail))
-
-                      // Products Mapping
-                      .ForMember(dest => dest.Products,opt => opt.MapFrom(src => src.Products != null ?
-                          src.Products.Select(p => new ProductDTO
-                          {
-                              Id = p.Id,
-                              Name = p.Name,
-                              Weight = p.Weight,
-                              Quantity = p.Quantity,
-                              CreatedAt = p.CreatedAt
-                          }).ToList() : new List<ProductDTO>()))
-
-                      // Other Properties
-                      .ForMember(dest => dest.IsDeleted,opt => opt.Ignore()).ReverseMap(); 
+            CreateMap<Order,addOrderDto>().ReverseMap().ForMember(dest => dest.CitySettingId,opt => opt.MapFrom(src => src.City))
+             .ForMember(dest => dest.BranchId,opt => opt.MapFrom(src => src.Branch))
+             .ForMember(dest => dest.RegionId,opt => opt.MapFrom(src => src.Region))
+             .ForMember(dest => dest.ShippingTypeId,opt => opt.MapFrom(src => src.ShippingId))
+             .ForMember(dest => dest.PaymentType,opt => opt.MapFrom(src => src.PaymentType))
+             .ForMember(dest => dest.MerchantId,opt => opt.MapFrom(src => src.MerchantName))
+             .ForMember(dest => dest.Branch,opt => opt.Ignore())
+             .ForMember(dest => dest.Region,opt => opt.Ignore())
+             .ForMember(dest => dest.ShippingType,opt => opt.Ignore())
+             .ForMember(dest => dest.CitySetting,opt => opt.Ignore());
             #endregion
-             
+            #region  Configratio Of OrderReport
+            CreateMap<OrderReport,OrderReportDTO>()
+            .ForMember(dest => dest.OrderId,op => op.MapFrom(src => src.OrderId))
+            .ReverseMap();
+            #endregion
+
+            CreateMap<AddEmployeeDTO,ApplicationUser>().AfterMap((src,dest) =>
+            {
+                dest.UserName = src.Email;
+            });
+            CreateMap<AddMerchantDTO,ApplicationUser>().AfterMap((src,dest) =>
+            {
+                dest.UserName = src.Email;
+            });
+            CreateMap<AddCourierDTO,ApplicationUser>().AfterMap((src,dest) =>
+            {
+                dest.UserName = src.Email;
+            });
+            CreateMap<SpecialCityCostDT0,SpecialCityCost>().ReverseMap();
+            CreateMap<SpecialCourierRegionDT0,SpecialCourierRegion>().ReverseMap();
         }
     }
 }

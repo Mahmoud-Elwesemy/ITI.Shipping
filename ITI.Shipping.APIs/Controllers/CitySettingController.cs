@@ -1,6 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,12 +20,21 @@ namespace ITI.Shipping.APIs.Controllers
             _serviceManager = serviceManager;
         }
         [HttpGet] // Get : /api/CitySetting
-        public async Task<ActionResult<IEnumerable<CitySettingDTO>>> GetCitySettings()
+        [HasPermission(Permissions.ViewCities)]
+        public async Task<ActionResult<IEnumerable<CitySettingDTO>>> GetCitySettings([FromQuery] Pramter pramter)
         {
-            var CitySetting = await _serviceManager.CitySettingService.GetCitySettingsAsync();
+            var CitySetting = await _serviceManager.CitySettingService.GetCitySettingsAsync(pramter);
+            return Ok(CitySetting);
+        }
+        [HttpGet("CityByRegion")] // Get : /api/CitySetting/CityByRegion
+        [HasPermission(Permissions.ViewCities)]
+        public async Task<ActionResult<IEnumerable<CitySettingDTO>>> GetCityByGovernorateName(int regionId)
+        {
+            var CitySetting = await _serviceManager.CitySettingService.GetCityByGovernorateName(regionId);
             return Ok(CitySetting);
         }
         [HttpGet("{id}")] // Get : /api/CitySetting/id
+        [HasPermission(Permissions.ViewCities)]
         public async Task<ActionResult<CitySettingDTO>> GetCitySetting(int id)
         {
             var CitySetting = await _serviceManager.CitySettingService.GetCitySettingAsync(id);
@@ -33,6 +45,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok(CitySetting);
         }
         [HttpPost] // Post : /api/CitySetting
+        [HasPermission(Permissions.AddCities)]
         public async Task<ActionResult<CitySettingToAddDTO>> AddCitySetting(CitySettingToAddDTO DTO)
         {
             if(DTO == null)
@@ -41,6 +54,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok();
         }
         [HttpPut("{id}")] // Put : /api/CitySetting/id
+        [HasPermission(Permissions.UpdateCities)]
         public async Task<ActionResult> UpdateCitySetting(int id,[FromBody] CitySettingToUpdateDTO DTO)
         {
             if(DTO == null || id != DTO.Id)
@@ -56,6 +70,7 @@ namespace ITI.Shipping.APIs.Controllers
             }
         }
         [HttpDelete("{id}")] // Delete : /api/CitySetting/id
+        [HasPermission(Permissions.DeleteCities)]
         public async Task<ActionResult> DeleteCitySetting(int id)
         {
             try
