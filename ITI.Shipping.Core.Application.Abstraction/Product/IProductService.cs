@@ -15,7 +15,7 @@ namespace ITI.Shipping.Core.Application.Abstraction.Product
         Task<IEnumerable<ProductDTO>> GetProductsAsync(Pramter pramter);
         Task<ProductDTO> GetProductAsync(int id);
         Task AddAsync(ProductDTO DTO);
-        Task UpdateAsync(ProductDTO DTO);
+        Task UpdateAsync(UpdateProductDTO DTO);
         Task DeleteAsync(int id);
     }
 }

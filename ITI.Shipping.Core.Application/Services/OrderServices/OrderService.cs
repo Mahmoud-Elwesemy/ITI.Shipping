@@ -54,7 +54,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             return orderDto;
         }
 
-        public async Task AddAsync(addOrderDto DTO ,Pramter? pramter)
+        public async Task AddAsync(addOrderDto DTO)
         {
             decimal ShippingCost = 0;
             decimal Ordercost = DTO.OrderCost;
@@ -65,7 +65,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             var pickupShippingCost = city?.pickupShippingCost;
             decimal standardShippingCost = city!.StandardShippingCost;
 
-            var IEnumerableweightsetting = await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync(pramter);
+            var IEnumerableweightsetting = await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync(null!);
             var weightsetting = IEnumerableweightsetting.FirstOrDefault();
             //var MinWeight = weightsetting.MinWeight;
             decimal MaxWeight = weightsetting!.MaxWeight;
@@ -140,9 +140,9 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
            
         }
 
-        public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersByStatus(OrderStatus status)
+        public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersByStatus(OrderStatus status,Pramter pramter)
         {
-            var orders = await _unitOfWork.GetOrderRepository().GetOrdersByStatus(status);
+            var orders = await _unitOfWork.GetOrderRepository().GetOrdersByStatus(status,pramter);
 
             var OrdersDto = _mapper.Map<IEnumerable<OrderWithProductsDto>>(orders);
             foreach(var order in OrdersDto)

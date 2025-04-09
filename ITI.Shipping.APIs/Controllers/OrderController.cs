@@ -1,9 +1,11 @@
 ﻿using ITI.Shipping.APIs.Filters;
 using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
+using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Domin.Entities_Helper;
 using ITI.Shipping.Core.Domin.Pramter_Helper;
+using ITI.Shipping.Core.Domin.ResponseHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata;
@@ -26,6 +28,23 @@ public class OrderController:ControllerBase
         var Orders = await _serviceManager.orderService.GetOrdersAsync(pramter);
         return Ok(Orders);
     }
+    [HttpGet("GetAllOrdersByStatus")]
+    [HasPermission(Permissions.ViewOrders)]
+
+    public async Task<IActionResult> GetAllOrdersByStatus(OrderStatus status,[FromQuery] Pramter pramter)
+    {
+        try
+        {
+            var orders = await _serviceManager.orderService.GetOrdersByStatus(status,pramter);
+            if(orders.ToList().Count == 0)
+                return NotFound(new ResponseAPI(StatusCodes.Status404NotFound,"No orders found"));
+            return Ok(orders);
+        }
+        catch
+        {
+            return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest));
+        }
+    }
     [HttpGet("{id}")] // Get : /api/Order/id
     [HasPermission(Permissions.ViewOrders)]
     public async Task<ActionResult<OrderWithProductsDto>> GetOrder(int id)
@@ -41,7 +60,7 @@ public class OrderController:ControllerBase
     {
         if(DTO == null)
             return BadRequest("Invalid Order data");
-        await _serviceManager.orderService.AddAsync(DTO,pramter);
+        await _serviceManager.orderService.AddAsync(DTO);
         return Ok();
     }
     [HttpPut("{id}")] // Put : /api/Order/id

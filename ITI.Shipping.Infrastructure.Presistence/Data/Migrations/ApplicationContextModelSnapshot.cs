@@ -221,7 +221,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Branches");
+                    b.ToTable("Branches", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.CitySetting", b =>
@@ -254,7 +254,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("CitySettings");
+                    b.ToTable("CitySettings", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.CourierReport", b =>
@@ -281,7 +281,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("CourierReports");
+                    b.ToTable("CourierReports", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.Order", b =>
@@ -376,7 +376,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("ShippingTypeId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.OrderReport", b =>
@@ -401,7 +401,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderReports");
+                    b.ToTable("OrderReports", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.Product", b =>
@@ -433,7 +433,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.Region", b =>
@@ -457,7 +457,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.ShippingType", b =>
@@ -484,7 +484,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShippingTypes");
+                    b.ToTable("ShippingTypes", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.SpecialCityCost", b =>
@@ -518,7 +518,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("MerchantId");
 
-                    b.ToTable("SpecialCityCost");
+                    b.ToTable("SpecialCityCost", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.SpecialCourierRegion", b =>
@@ -542,7 +542,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("SpecialCourierRegion");
+                    b.ToTable("SpecialCourierRegion", (string)null);
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.WeightSetting", b =>
@@ -570,7 +570,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeightSettings");
+                    b.ToTable("WeightSettings", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
