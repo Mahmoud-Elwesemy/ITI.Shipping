@@ -24,6 +24,7 @@ using ITI.Shipping.Core.Application.Services.SpecialCourierRegionServices;
 using ITI.Shipping.Core.Application.Services.WeightSettingServices;
 using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,10 @@ namespace ITI.Shipping.Core.Application.Services
         private readonly Lazy<IOrderService> _orderService;
         private readonly Lazy<IProductService> _productService; 
         private readonly Lazy<IOrderReportService> _orderReportService;
-        public ServiceManager(IUnitOfWork unitOfWork , IMapper mapper , UserManager<ApplicationUser> userManager)
+
+
+
+        public ServiceManager(IUnitOfWork unitOfWork , IMapper mapper , UserManager<ApplicationUser> userManager,IHttpContextAccessor httpContextAccessor)
         {
             _branchService = new Lazy<IBranchService>(() => new BranchService(unitOfWork,mapper));
             _citySettingService = new Lazy<ICitySettingService>(() => new CitySettingService(unitOfWork,mapper));
@@ -56,7 +60,7 @@ namespace ITI.Shipping.Core.Application.Services
             _SpecialCityCostService = new Lazy<ISpecialCityCostService>(() => new SpecialCityCostService(unitOfWork,mapper));
             _shippingTypeService =new Lazy<IShippingTypeService> (() => new ShippingTypeService(unitOfWork,mapper));
             _weightSettingService = new Lazy<IWeightSettingService>(() => new WeightSettingService(unitOfWork,mapper));
-            _orderService= new Lazy<IOrderService>(() => new OrderService(unitOfWork,mapper,userManager));
+            _orderService= new Lazy<IOrderService>(() => new OrderService(unitOfWork,mapper,userManager,httpContextAccessor));
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork,mapper));
             _orderReportService = new Lazy<IOrderReportService>(()=> new OrderReportService(unitOfWork,mapper));
         }

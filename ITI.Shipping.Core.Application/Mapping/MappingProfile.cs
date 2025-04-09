@@ -154,7 +154,8 @@ namespace ITI.Shipping.Core.Application.Mapping
                 dest.UserName = src.Email;
             });
             CreateMap<SpecialCityCostDT0,SpecialCityCost>().ReverseMap();
-            CreateMap<SpecialCourierRegionDT0,SpecialCourierRegion>().ReverseMap();
+            CreateMap<CourierRegionDT0,SpecialCourierRegion>().ReverseMap();
+            CreateMap<SpecialCourierRegionDTO,SpecialCourierRegion>().ReverseMap();
         }
     }
 }

@@ -7,19 +7,23 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ITI.Shipping.Core.Application.Abstraction.User.Model;
-public record AddCourierDTO(
-        string Email,
-        string FullName,
-        string PhoneNumber,
-        string Address,
-        string Password,
-        int BranchId,
-        DeductionTypes DeductionType,
-        decimal DeductionCompanyFromOrder,
-        List<SpecialCourierRegionDT0> SpecialCourierRegions
-    );
+public record AddCourierDTO {
+    public string Email { get; set; } = string.Empty;
+    public string FullName { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public int BranchId { get; set; }
+    //[JsonIgnore]
+    //public string RoleName = "Courier";
+    public DeductionTypes DeductionType { get; set; } = DeductionTypes.Fixed;
+    public decimal DeductionCompanyFromOrder { get; set; } = 0;
+    public List<CourierRegionDT0> SpecialCourierRegions { get; set; } = new();
+ 
 
-public record SpecialCourierRegionDT0
+}
+       
+public record CourierRegionDT0
 {
     public int RegionId { get; set; }
     [JsonIgnore]

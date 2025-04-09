@@ -85,7 +85,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
 
         public ISpecialCourierRegionRepository GetSpecialCourierRegionRepository()
         {
-            return (ISpecialCourierRegionRepository) _repositories.GetOrAdd(typeof(SpecialCourierRegion).Name,new SpecialCityCostRepository(_context));
+            return (ISpecialCourierRegionRepository) _repositories.GetOrAdd(typeof(SpecialCourierRegion).Name,new SpecialCourierRegionRepository(_context));
         }
 
         public ISpecialCityCostRepository GetSpecialCityCostRepository()

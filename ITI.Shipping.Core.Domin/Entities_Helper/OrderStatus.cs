@@ -8,6 +8,7 @@ namespace ITI.Shipping.Core.Domin.Entities_Helper
 {
     public enum OrderStatus
     {
+        WaitingForConfirmation,
         Pending,
         InProgress,
         Delivered,

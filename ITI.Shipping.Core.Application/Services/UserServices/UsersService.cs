@@ -15,6 +15,7 @@ using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
 using ITI.Shipping.Core.Application.Abstraction.Auth.Model;
 using ITI.Shipping.Core.Application.Abstraction.Auth;
 using ITI.Shipping.Infrastructure.Presistence.Data;
+using System.Diagnostics.Metrics;
 
 namespace ITI.Shipping.Core.Application.Services.UserServices;
 public class UsersService(
@@ -38,7 +39,7 @@ public class UsersService(
         var result = await _userManager.CreateAsync(user,addCourierDTO.Password);
         if(!result.Succeeded)
             return string.Join(",",result.Errors.Select(e => e.Description));
-        //await _userManager.AddToRoleAsync(user,addEmployeeDTO.RoleName); // Courier Role
+      // await _userManager.AddToRoleAsync(user,addCourierDTO.RoleName); // Courier Role
         foreach(var item in addCourierDTO.SpecialCourierRegions)
         {
             item.CourierId = user.Id;
@@ -68,7 +69,7 @@ public class UsersService(
         var result = await _userManager.CreateAsync(user,addMerchantDTO.Password);
         if(!result.Succeeded)
             return string.Join(",",result.Errors.Select(e => e.Description));
-        //await _userManager.AddToRoleAsync(user,addEmployeeDTO.RoleName); // Merchant Role
+      //  await _userManager.AddToRoleAsync(user,addMerchantDTO.RoleName); // Merchant Role
         if(addMerchantDTO.SpecialCityCosts is not null)
         {
             foreach(var specialCityCosts in addMerchantDTO.SpecialCityCosts)

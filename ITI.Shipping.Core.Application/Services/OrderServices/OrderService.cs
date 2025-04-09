@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using Castle.Core.Logging;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
 using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +23,14 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(IUnitOfWork unitOfWork , IMapper mapper ,UserManager<ApplicationUser> userManager)
+        public OrderService(IUnitOfWork unitOfWork , IMapper mapper ,UserManager<ApplicationUser> userManager,IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
+           _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersAsync(Pramter pramter)
@@ -62,11 +67,11 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             var IsOutOfCityShipping = DTO.IsOutOfCityShipping;
 
             var city = await _unitOfWork.GetRepository<CitySetting,int>().GetByIdAsync(DTO.City);
-            var pickupShippingCost = city?.pickupShippingCost;
+            var pickupShippingCost = city!.pickupShippingCost;
             decimal standardShippingCost = city!.StandardShippingCost;
 
-            var IEnumerableweightsetting = await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync(null!);
-            var weightsetting = IEnumerableweightsetting.FirstOrDefault();
+            var weightsetting = await _unitOfWork.GetRepository<WeightSetting,int>().GetByIdAsync(1);
+           // var weightsetting = IEnumerableweightsetting.FirstOrDefault();
             //var MinWeight = weightsetting.MinWeight;
             decimal MaxWeight = weightsetting!.MaxWeight;
             decimal CostPerKG = weightsetting!.CostPerKg;
@@ -115,7 +120,16 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
                 ShippingCost += ShippingType.BaseCost;
             }
             DTO.ShippingCost = ShippingCost;
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext!.User);
+            if(currentUser != null && await _userManager.IsInRoleAsync(currentUser,"Merchant"))
+            {
+                DTO.status = OrderStatus.WaitingForConfirmation;
 
+            }
+            else
+            {
+                DTO.status = OrderStatus.Pending;
+            }
             await _unitOfWork.GetOrderRepository().AddAsync(_mapper.Map<Order>(DTO));
             await _unitOfWork.CompleteAsync();
         }

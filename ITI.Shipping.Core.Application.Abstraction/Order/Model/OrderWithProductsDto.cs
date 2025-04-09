@@ -64,6 +64,8 @@ namespace ITI.Shipping.Core.Application.Abstraction.Order.Model
 
         [MinLength(1,ErrorMessage = "At least one product is required")]
         public List<ProductDTO> Products { get; set; } = new();
+        [JsonIgnore]
+        public OrderStatus status { get; set; }
 
     }
     public record updateOrderDto:addOrderDto

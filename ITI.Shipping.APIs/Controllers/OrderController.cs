@@ -56,7 +56,7 @@ public class OrderController:ControllerBase
     }
     [HttpPost] // Post : /api/Order
     [HasPermission(Permissions.AddOrders)]
-    public async Task<ActionResult<addOrderDto>> AddOrder(addOrderDto DTO , [FromQuery] Pramter pramter)
+    public async Task<ActionResult<addOrderDto>> AddOrder(addOrderDto DTO)
     {
         if(DTO == null)
             return BadRequest("Invalid Order data");
