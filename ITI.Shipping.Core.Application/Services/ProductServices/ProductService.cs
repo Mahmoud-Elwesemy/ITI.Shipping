@@ -39,7 +39,7 @@ namespace ITI.Shipping.Core.Application.Services.ProductServices
             await _unitOfWork.GetRepository<Product,int>().AddAsync(_mapper.Map<Product>(DTO));
         }
 
-        public async Task UpdateAsync(ProductDTO DTO)
+        public async Task UpdateAsync(UpdateProductDTO DTO)
         {
             var ProductRepo = _unitOfWork.GetRepository<Product,int>();
 

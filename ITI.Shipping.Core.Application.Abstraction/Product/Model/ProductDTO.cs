@@ -6,12 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ITI.Shipping.Core.Application.Abstraction.Product.Model;
-public class ProductDTO
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public decimal Weight { get; set; }   
-    public int Quantity { get; set; } = 0;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public int OrderId { get; set; }
-}
+public record ProductDTO
+    (string Name,decimal Weight,int Quantity);
+public record  UpdateProductDTO
+    (int Id,string Name,decimal Weight,int Quantity);

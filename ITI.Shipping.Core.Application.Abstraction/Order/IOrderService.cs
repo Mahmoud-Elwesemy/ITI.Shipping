@@ -14,8 +14,8 @@ namespace ITI.Shipping.Core.Application.Abstraction.Order
     {
         Task<IEnumerable<OrderWithProductsDto>> GetOrdersAsync(Pramter pramter);
         Task<OrderWithProductsDto> GetOrderAsync(int id);
-        Task<IEnumerable<OrderWithProductsDto>> GetOrdersByStatus(OrderStatus status);
-        Task AddAsync(addOrderDto DTO,Pramter? pramter);
+        Task<IEnumerable<OrderWithProductsDto>> GetOrdersByStatus(OrderStatus status,Pramter pramter);
+        Task AddAsync(addOrderDto DTO);
         Task UpdateAsync(updateOrderDto DTO);
         Task DeleteAsync(int id);
     }
