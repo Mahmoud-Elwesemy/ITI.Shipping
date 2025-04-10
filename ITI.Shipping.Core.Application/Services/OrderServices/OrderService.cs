@@ -23,6 +23,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(IUnitOfWork unitOfWork , IMapper mapper ,UserManager<ApplicationUser> userManager,IHttpContextAccessor httpContextAccessor)
@@ -131,7 +132,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             }
             DTO.ShippingCost = ShippingCost;
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext!.User);
-            if(currentUser != null && await _userManager.IsInRoleAsync(currentUser,"Merchant"))
+            if(currentUser != null && await _userManager.IsInRoleAsync(currentUser,DefaultRole.Merchant))
             {
                 DTO.status = OrderStatus.WaitingForConfirmation;
 
@@ -197,11 +198,15 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
                 _unitOfWork.GetOrderRepository().UpdateAsync(Order);
                 await _unitOfWork.CompleteAsync();
         }
-        //-------------------------------------------------------------------
         // Assign order to courier
-        //public Task AssignOrderToCourier(int id,string courierId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task AssignOrderToCourier(int OrderId,string courierId)
+        {
+            var Order = await _unitOfWork.GetOrderRepository().GetByIdAsync(OrderId);
+            Order!.CourierId = courierId;
+            _unitOfWork.GetOrderRepository().UpdateAsync(Order);
+            await _unitOfWork.CompleteAsync();
+        }
+        //-------------------------------------------------------------------
+     
     }
 }

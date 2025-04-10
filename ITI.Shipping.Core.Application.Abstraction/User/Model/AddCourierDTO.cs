@@ -14,8 +14,8 @@ public record AddCourierDTO {
     public string Address { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public int BranchId { get; set; }
-    //[JsonIgnore]
-    //public string RoleName = "Courier";
+    [JsonIgnore]
+    public string RoleName = DefaultRole.Courier;
     public DeductionTypes DeductionType { get; set; } = DeductionTypes.Fixed;
     public decimal DeductionCompanyFromOrder { get; set; } = 0;
     public List<CourierRegionDT0> SpecialCourierRegions { get; set; } = new();

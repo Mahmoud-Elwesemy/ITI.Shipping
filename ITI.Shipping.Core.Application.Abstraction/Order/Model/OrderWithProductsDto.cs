@@ -35,7 +35,7 @@ namespace ITI.Shipping.Core.Application.Abstraction.Order.Model
 
     public record addOrderDto
     {
-
+        public OrderType OrderTypes { get; set; }
         public bool IsOutOfCityShipping { get; set; }
         public int ShippingId { get; set; }
         //public string? ShippingType { get; set; }

@@ -24,7 +24,7 @@ namespace ITI.Shipping.Core.Domin.Entities
         //----------- Enum OrderStatus---------------------------------
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         //----------- Enum OrderStatus---------------------------------
-        public OrderType Types { get; set; }
+        public OrderType OrderTypes { get; set; }
         //----------- Ids From User ---------------------------------
         public string MerchantId { get; set; } = string.Empty;
         public string EmployeeId { get; set; } = string.Empty;

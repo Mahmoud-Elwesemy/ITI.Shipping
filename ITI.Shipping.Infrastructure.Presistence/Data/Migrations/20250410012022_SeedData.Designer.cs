@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250324033943_Fixed-Order-table")]
-    partial class FixedOrdertable
+    [Migration("20250410012022_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("CanceledOrder")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("CityId")
@@ -89,6 +90,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("DeductionCompanyFromOrder")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("DeductionTypes")
@@ -133,6 +135,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal?>("PickupPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("RegionId")
@@ -222,9 +225,11 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("StandardShippingCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("pickupShippingCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -305,6 +310,9 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsOutOfCityShipping")
                         .HasColumnType("bit");
 
@@ -316,13 +324,21 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OrderCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderTypes")
+                        .HasColumnType("int");
 
                     b.Property<int?>("PaymentType")
                         .HasColumnType("int");
 
                     b.Property<int?>("RegionId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("ShippingCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ShippingTypeId")
                         .HasColumnType("int");
@@ -331,6 +347,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -395,6 +412,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Weight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -437,6 +455,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("BaseCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -476,6 +495,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -520,15 +540,18 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("CostPerKg")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("MaxWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MinWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

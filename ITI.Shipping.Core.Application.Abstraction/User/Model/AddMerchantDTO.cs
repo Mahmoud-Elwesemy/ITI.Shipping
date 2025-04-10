@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.Shipping.Core.Domin.Entities_Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,8 @@ public record AddMerchantDTO
     public int RegionId { get; set; }
     public int CityId { get; set; }
     public string StoreName { get; set; } = string.Empty;
-    //[JsonIgnore]
-    //public string RoleName { get; set; } = "Merchant";
+    [JsonIgnore]
+    public string RoleName { get; set; } = DefaultRole.Merchant;
     public List<SpecialCityCostDT0>? SpecialCityCosts { get; set; } = new();
 }
        

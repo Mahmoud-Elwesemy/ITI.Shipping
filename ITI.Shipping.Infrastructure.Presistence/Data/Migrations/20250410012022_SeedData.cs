@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDataBase : Migration
+    public partial class SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,7 +49,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BaseCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BaseCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -64,9 +64,9 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MinWeight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    MaxWeight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CostPerKg = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MinWeight = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    MaxWeight = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    CostPerKg = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -92,7 +92,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,8 +124,8 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StandardShippingCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    pickupShippingCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StandardShippingCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    pickupShippingCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RegionId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -149,10 +149,10 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StoreName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PickupPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CanceledOrder = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    PickupPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
+                    CanceledOrder = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     DeductionTypes = table.Column<int>(type: "int", nullable: true),
-                    DeductionCompanyFromOrder = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DeductionCompanyFromOrder = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     BranchId = table.Column<int>(type: "int", nullable: true),
                     RegionId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
@@ -209,7 +209,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +229,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,13 +247,13 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,7 +273,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,12 +282,15 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalWeight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalWeight = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    OrderCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ShippingCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsOutOfCityShipping = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    OrderTypes = table.Column<int>(type: "int", nullable: false),
                     MerchantId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourierId = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -295,7 +298,6 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     RegionId = table.Column<int>(type: "int", nullable: true),
                     CitySettingId = table.Column<int>(type: "int", nullable: true),
                     ShippingTypeId = table.Column<int>(type: "int", nullable: true),
-                    PaymentTypeId = table.Column<int>(type: "int", nullable: true),
                     PaymentType = table.Column<int>(type: "int", nullable: true),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerPhone1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -340,7 +342,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CitySettingId = table.Column<int>(type: "int", nullable: false),
                     MerchantId = table.Column<string>(type: "nvarchar(450)", nullable: false)
@@ -353,13 +355,13 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.MerchantId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpecialCityCost_CitySettings_CitySettingId",
                         column: x => x.CitySettingId,
                         principalTable: "CitySettings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -379,13 +381,13 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.CourierId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpecialCourierRegion_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -406,7 +408,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.CourierId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CourierReports_Orders_OrderId",
                         column: x => x.OrderId,
@@ -432,7 +434,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -443,7 +445,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Weight = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -455,7 +457,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -131,9 +131,23 @@ public class OrderController:ControllerBase
             await _serviceManager.orderService.ChangeOrderStatusToDeclined(id);
             return NoContent(); // 204 No Content (successful update)
         }
-        catch(KeyNotFoundException ex)
+        catch
         {
-            return NotFound(ex.Message);
+            return NotFound(new ResponseAPI(StatusCodes.Status404NotFound));
+        }
+    }
+    [HttpPost("AssignOrderToCourier/{OrderId}/{courierId}")] // Post : /api/Order/AssignOrderToCourier/OrderId/courierId
+    [HasPermission(Permissions.UpdateOrders)]
+    public async Task<IActionResult> AssignOrderToCourier(int OrderId,string courierId)
+    {
+        try
+        {
+            await _serviceManager.orderService.AssignOrderToCourier(OrderId,courierId);
+            return NoContent(); // 204 No Content (successful update)
+        }
+        catch
+        {
+            return NotFound(new ResponseAPI(StatusCodes.Status404NotFound));
         }
     }
 }

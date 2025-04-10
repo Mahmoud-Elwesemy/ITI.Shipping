@@ -18,7 +18,7 @@ namespace ITI.Shipping.Core.Application.Abstraction.Order
         Task<IEnumerable<OrderWithProductsDto>> GetAllWatingOrder(Pramter pramter);
         Task ChangeOrderStatusToPending(int id);
         Task ChangeOrderStatusToDeclined(int id);
-        //Task AssignOrderToCourier(int id,string courierId);
+        Task AssignOrderToCourier(int OrderId,string courierId);
         Task AddAsync(addOrderDto DTO);
         Task UpdateAsync(updateOrderDto DTO);
         Task DeleteAsync(int id);

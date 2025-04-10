@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250407040922_Fix-OrderTable")]
-    partial class FixOrderTable
+    [Migration("20250410012135_SeedRoles")]
+    partial class SeedRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,35 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "01961d25-b4da-7184-a2a8-765486bd4857",
+                            ConcurrencyStamp = "EAE00686-2608-4516-AD1B-F96CD87C475E",
+                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(5799),
+                            IsDeleted = false,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "01961d25-b4da-75a5-a1f4-a7aa10e421ed",
+                            ConcurrencyStamp = "386C6E14-D0FD-40FF-80D0-74B419360EF0",
+                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(8225),
+                            IsDeleted = false,
+                            Name = "Courier",
+                            NormalizedName = "COURIER"
+                        },
+                        new
+                        {
+                            Id = "01961d25-b4da-71e9-a488-1b8db232e984",
+                            ConcurrencyStamp = "1420D50C-F54D-4503-88E8-A2EFA3BD7137",
+                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(8368),
+                            IsDeleted = false,
+                            Name = "Merchant",
+                            NormalizedName = "MERCHANT"
+                        });
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.ApplicationUser", b =>
@@ -178,19 +207,19 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                             Id = "0195d439-9ca1-7873-9c14-a4bc1c201593",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "0195d43b-a808-757b-9c3e-bf90c6091133",
-                            CreatedAt = new DateTime(2025, 4, 7, 6, 9, 21, 317, DateTimeKind.Local).AddTicks(2240),
-                            Email = "Weso430@gmail.com",
+                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 321, DateTimeKind.Local).AddTicks(2848),
+                            Email = "admin@shipping.com",
                             EmailConfirmed = false,
-                            FullName = "Weso Admin",
+                            FullName = "Shipping Admin",
                             IsDeleted = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "WESO430@GMAIL.COM",
-                            NormalizedUserName = "WESO430@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDkwfiAN85HZq4NVHLIESJNCT9+jeZWRwSMTJ4NkrvDjChJPLCPCstbbrsF2xF4diQ==",
+                            NormalizedEmail = "ADMIN@SHIPPING.COM",
+                            NormalizedUserName = "ADMIN@SHIPPING.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMsgiOfSDL//UsvbhAiiWNkHa5hgDrVvV6yAMpoA3nipvFi+S3FOB3jbUHc1edKIbw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "0195d43be3f271878cc37be7dfc34361",
                             TwoFactorEnabled = false,
-                            UserName = "Weso430@gmail.com"
+                            UserName = "admin@shipping.com"
                         });
                 });
 
@@ -348,6 +377,9 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("OrderTypes")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PaymentType")
                         .HasColumnType("int");
 
@@ -355,6 +387,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("ShippingCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ShippingTypeId")
@@ -606,364 +639,392 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                             Id = 1,
                             ClaimType = "permissions",
                             ClaimValue = "Permissions:ViewPermissions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "permissions",
                             ClaimValue = "Permissions:AddPermissions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "permissions",
                             ClaimValue = "Permissions:UpdatePermissions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "permissions",
                             ClaimValue = "Permissions:DeletePermissions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 5,
                             ClaimType = "permissions",
                             ClaimValue = "Settings:ViewSettings",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 6,
                             ClaimType = "permissions",
                             ClaimValue = "Settings:AddSettings",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 7,
                             ClaimType = "permissions",
                             ClaimValue = "Settings:UpdateSettings",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 8,
                             ClaimType = "permissions",
                             ClaimValue = "Settings:DeleteSettings",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 9,
                             ClaimType = "permissions",
                             ClaimValue = "Bank:ViewBank",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 10,
                             ClaimType = "permissions",
                             ClaimValue = "Bank:AddBank",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 11,
                             ClaimType = "permissions",
                             ClaimValue = "Bank:UpdateBank",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 12,
                             ClaimType = "permissions",
                             ClaimValue = "Bank:DeleteBank",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 13,
                             ClaimType = "permissions",
                             ClaimValue = "MoneySafe:ViewMoneySafe",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 14,
                             ClaimType = "permissions",
                             ClaimValue = "MoneySafe:AddMoneySafe",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 15,
                             ClaimType = "permissions",
                             ClaimValue = "MoneySafe:UpdateMoneySafe",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 16,
                             ClaimType = "permissions",
                             ClaimValue = "MoneySafe:DeleteMoneySafe",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 17,
                             ClaimType = "permissions",
                             ClaimValue = "Branches:ViewBranches",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 18,
                             ClaimType = "permissions",
                             ClaimValue = "Branches:AddBranches",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 19,
                             ClaimType = "permissions",
                             ClaimValue = "Branches:UpdateBranches",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 20,
                             ClaimType = "permissions",
                             ClaimValue = "Branches:DeleteBranches",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 21,
                             ClaimType = "permissions",
                             ClaimValue = "Employees:ViewEmployees",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 22,
                             ClaimType = "permissions",
                             ClaimValue = "Employees:AddEmployees",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 23,
                             ClaimType = "permissions",
                             ClaimValue = "Employees:UpdateEmployees",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 24,
                             ClaimType = "permissions",
                             ClaimValue = "Employees:DeleteEmployees",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 25,
                             ClaimType = "permissions",
                             ClaimValue = "Merchants:ViewMerchants",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 26,
                             ClaimType = "permissions",
                             ClaimValue = "Merchants:AddMerchants",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 27,
                             ClaimType = "permissions",
                             ClaimValue = "Merchants:UpdateMerchants",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 28,
                             ClaimType = "permissions",
                             ClaimValue = "Merchants:DeleteMerchants",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 29,
                             ClaimType = "permissions",
                             ClaimValue = "Couriers:ViewCouriers",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 30,
                             ClaimType = "permissions",
                             ClaimValue = "Couriers:AddCouriers",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 31,
                             ClaimType = "permissions",
                             ClaimValue = "Couriers:UpdateCouriers",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 32,
                             ClaimType = "permissions",
                             ClaimValue = "Couriers:DeleteCouriers",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 33,
                             ClaimType = "permissions",
                             ClaimValue = "Regions:ViewRegions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 34,
                             ClaimType = "permissions",
                             ClaimValue = "Regions:AddRegions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 35,
                             ClaimType = "permissions",
                             ClaimValue = "Regions:UpdateRegions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 36,
                             ClaimType = "permissions",
                             ClaimValue = "Regions:DeleteRegions",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 37,
                             ClaimType = "permissions",
                             ClaimValue = "Cities:ViewCities",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 38,
                             ClaimType = "permissions",
                             ClaimValue = "Cities:AddCities",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 39,
                             ClaimType = "permissions",
                             ClaimValue = "Cities:UpdateCities",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 40,
                             ClaimType = "permissions",
                             ClaimValue = "Cities:DeleteCities",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 41,
                             ClaimType = "permissions",
                             ClaimValue = "Orders:ViewOrders",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 42,
                             ClaimType = "permissions",
                             ClaimValue = "Orders:AddOrders",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 43,
                             ClaimType = "permissions",
                             ClaimValue = "Orders:UpdateOrders",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 44,
                             ClaimType = "permissions",
                             ClaimValue = "Orders:DeleteOrders",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 45,
                             ClaimType = "permissions",
                             ClaimValue = "OrderReports:ViewOrderReports",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 46,
                             ClaimType = "permissions",
                             ClaimValue = "OrderReports:AddOrderReports",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 47,
                             ClaimType = "permissions",
                             ClaimValue = "OrderReports:UpdateOrderReports",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 48,
                             ClaimType = "permissions",
                             ClaimValue = "OrderReports:DeleteOrderReports",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 49,
                             ClaimType = "permissions",
                             ClaimValue = "Accounts:ViewAccounts",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 50,
                             ClaimType = "permissions",
                             ClaimValue = "Accounts:AddAccounts",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 51,
                             ClaimType = "permissions",
                             ClaimValue = "Accounts:UpdateAccounts",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         },
                         new
                         {
                             Id = 52,
                             ClaimType = "permissions",
                             ClaimValue = "Accounts:DeleteAccounts",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:ViewOrders",
+                            RoleId = "01961d25-b4da-75a5-a1f4-a7aa10e421ed"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:UpdateOrders",
+                            RoleId = "01961d25-b4da-75a5-a1f4-a7aa10e421ed"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:ViewOrders",
+                            RoleId = "01961d25-b4da-71e9-a488-1b8db232e984"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:AddOrders",
+                            RoleId = "01961d25-b4da-71e9-a488-1b8db232e984"
                         });
                 });
 
@@ -1032,7 +1093,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         new
                         {
                             UserId = "0195d439-9ca1-7873-9c14-a4bc1c201593",
-                            RoleId = "admin-role"
+                            RoleId = "01961d25-b4da-7184-a2a8-765486bd4857"
                         });
                 });
 
