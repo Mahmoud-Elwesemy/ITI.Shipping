@@ -33,9 +33,9 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersAsync(Pramter pramter)
+       //---------------------------------------------------------------------------
+        private async Task<IEnumerable<OrderWithProductsDto>> GetMerchantName(IEnumerable<Order> orders)
         {
-            var orders = await _unitOfWork.GetOrderRepository().GetAllAsync(pramter);
             var ordersDto = _mapper.Map<IEnumerable<OrderWithProductsDto>>(orders);
             foreach(var order in ordersDto)
             {
@@ -44,6 +44,16 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             }
             return ordersDto;
         }
+       //--------------------------------------------------------------------------
+
+
+        public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersAsync(Pramter pramter)
+        {
+            var orders = await _unitOfWork.GetOrderRepository().GetAllAsync(pramter);
+            var ordersDto = await GetMerchantName(orders);
+            return ordersDto;
+        }
+         
         public async Task<OrderWithProductsDto> GetOrderAsync(int id)
         {
             var findOrder = await _unitOfWork.GetOrderRepository().GetByIdAsync(id);
@@ -70,8 +80,8 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             var pickupShippingCost = city!.pickupShippingCost;
             decimal standardShippingCost = city!.StandardShippingCost;
 
-            var weightsetting = await _unitOfWork.GetRepository<WeightSetting,int>().GetByIdAsync(1);
-           // var weightsetting = IEnumerableweightsetting.FirstOrDefault();
+            var Allweightsetting = await _unitOfWork.GetWeightSettingRepository().GetAllWeightSetting();
+            var weightsetting = Allweightsetting.FirstOrDefault();
             //var MinWeight = weightsetting.MinWeight;
             decimal MaxWeight = weightsetting!.MaxWeight;
             decimal CostPerKG = weightsetting!.CostPerKg;
@@ -153,18 +163,45 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             await _unitOfWork.CompleteAsync();
            
         }
-
+        // Get all orders by status
         public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersByStatus(OrderStatus status,Pramter pramter)
         {
             var orders = await _unitOfWork.GetOrderRepository().GetOrdersByStatus(status,pramter);
 
-            var OrdersDto = _mapper.Map<IEnumerable<OrderWithProductsDto>>(orders);
-            foreach(var order in OrdersDto)
-            {
-                var MerchantName = await _userManager.FindByIdAsync(order.MerchantName);
-                order.MerchantName = MerchantName!.FullName;
-            }
-            return OrdersDto;
+            var ordersDto = await GetMerchantName(orders);
+            return ordersDto;
         }
+        //  Get all waiting orders
+        public async Task<IEnumerable<OrderWithProductsDto>> GetAllWatingOrder(Pramter pramter)
+        {
+          var WatingOrder =  await _unitOfWork.GetOrderRepository().GetAllWatingOrder(pramter);
+            var WatingordersDto = await GetMerchantName(WatingOrder);
+            return WatingordersDto;
+        }
+        // Change order status to pending
+        public async Task ChangeOrderStatusToPending(int id)
+        {
+            await ChangeOrderStatus(id,OrderStatus.Pending);
+        }
+        // Change order status to Declined
+        public async Task ChangeOrderStatusToDeclined(int id)
+        {
+            await ChangeOrderStatus(id,OrderStatus.Declined);
+        }
+
+        //--------------------------------------------------------------------
+        private async Task ChangeOrderStatus(int id , OrderStatus orderStatus)
+        {
+                var Order = await _unitOfWork.GetOrderRepository().GetByIdAsync(id);
+                Order!.Status = orderStatus;
+                _unitOfWork.GetOrderRepository().UpdateAsync(Order);
+                await _unitOfWork.CompleteAsync();
+        }
+        //-------------------------------------------------------------------
+        // Assign order to courier
+        //public Task AssignOrderToCourier(int id,string courierId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

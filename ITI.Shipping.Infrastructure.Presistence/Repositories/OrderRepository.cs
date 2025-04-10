@@ -19,7 +19,6 @@ public class OrderRepository:GenericRepository<Order,int>, IOrderRepository
     {
         _Context = applicationContext;
     }
-
     public async Task<IEnumerable<Order>> GetOrdersByStatus(OrderStatus status,Pramter pramter)
     {
         var orders = _Context.Orders.Where(x => x.Status == status);
@@ -39,5 +38,9 @@ public class OrderRepository:GenericRepository<Order,int>, IOrderRepository
         {
             return await orders.ToListAsync();
         }
+    }
+    public async Task<IEnumerable<Order>> GetAllWatingOrder(Pramter pramter)
+    {
+        return await GetOrdersByStatus(OrderStatus.WaitingForConfirmation,pramter);
     }
 }

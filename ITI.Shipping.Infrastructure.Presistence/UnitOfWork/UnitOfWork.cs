@@ -97,5 +97,10 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
         {
             return (IOrderRepository) _repositories.GetOrAdd(typeof(Order).Name,new OrderRepository(_context));
         }
+
+        public IWeightSettingRepository GetWeightSettingRepository()
+        {
+            return (IWeightSettingRepository) _repositories.GetOrAdd(typeof(WeightSetting).Name,new WeightSettingRepository(_context));
+        }
     }
 }

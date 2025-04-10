@@ -23,6 +23,8 @@ namespace ITI.Shipping.Core.Domin.Entities
         public bool IsDeleted { get; set; } = false;
         //----------- Enum OrderStatus---------------------------------
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        //----------- Enum OrderStatus---------------------------------
+        public OrderType Types { get; set; }
         //----------- Ids From User ---------------------------------
         public string MerchantId { get; set; } = string.Empty;
         public string EmployeeId { get; set; } = string.Empty;

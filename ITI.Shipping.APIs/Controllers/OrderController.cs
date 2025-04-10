@@ -21,6 +21,7 @@ public class OrderController:ControllerBase
     {
         _serviceManager = serviceManager;
     }
+
     [HttpGet] // Get : /api/Order
     [HasPermission(Permissions.ViewOrders)]
     public async Task<ActionResult<IEnumerable<OrderWithProductsDto>>> GetAllOrder([FromQuery] Pramter pramter)
@@ -28,7 +29,8 @@ public class OrderController:ControllerBase
         var Orders = await _serviceManager.orderService.GetOrdersAsync(pramter);
         return Ok(Orders);
     }
-    [HttpGet("GetAllOrdersByStatus")]
+
+    [HttpGet("GetAllOrdersByStatus")] // Get : /api/Order/GetAllOrdersByStatus
     [HasPermission(Permissions.ViewOrders)]
 
     public async Task<IActionResult> GetAllOrdersByStatus(OrderStatus status,[FromQuery] Pramter pramter)
@@ -45,6 +47,7 @@ public class OrderController:ControllerBase
             return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest));
         }
     }
+
     [HttpGet("{id}")] // Get : /api/Order/id
     [HasPermission(Permissions.ViewOrders)]
     public async Task<ActionResult<OrderWithProductsDto>> GetOrder(int id)
@@ -54,6 +57,7 @@ public class OrderController:ControllerBase
             return NotFound();
         return Ok(Order);
     }
+
     [HttpPost] // Post : /api/Order
     [HasPermission(Permissions.AddOrders)]
     public async Task<ActionResult<addOrderDto>> AddOrder(addOrderDto DTO)
@@ -63,6 +67,7 @@ public class OrderController:ControllerBase
         await _serviceManager.orderService.AddAsync(DTO);
         return Ok();
     }
+
     [HttpPut("{id}")] // Put : /api/Order/id
     [HasPermission(Permissions.UpdateOrders)]
     public async Task<ActionResult> UpdateOrder(int id,[FromBody] updateOrderDto DTO)
@@ -79,6 +84,7 @@ public class OrderController:ControllerBase
             return NotFound(ex.Message);
         }
     }
+
     [HttpDelete("{id}")] // Delete : /api/Order/id
     [HasPermission(Permissions.DeleteOrders)]
     public async Task<ActionResult> DeleteOrder(int id)
@@ -87,6 +93,43 @@ public class OrderController:ControllerBase
         {
             await _serviceManager.orderService.DeleteAsync(id);
             return NoContent(); // 204 No Content (successful deletion)
+        }
+        catch(KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet("GetAllWaitingOrders")] // Get : /api/Order/GetAllWaitingOrders
+    [HasPermission(Permissions.ViewOrders)]
+    public async Task<ActionResult<IEnumerable<OrderWithProductsDto>>> GetAllWatingOrder([FromQuery] Pramter pramter)
+    {
+        var Orders = await _serviceManager.orderService.GetAllWatingOrder(pramter);
+        return Ok(Orders);
+    }
+
+    [HttpPost("ChangeOrderStatusToPending/{id}")] // Post : /api/Order/ChangeOrderStatusToPending/id
+    [HasPermission(Permissions.UpdateOrders)]
+    public async Task<IActionResult> ChangeOrderStatusTOPending(int id)
+    {
+        try
+        {
+            await _serviceManager.orderService.ChangeOrderStatusToPending(id);
+            return NoContent(); // 204 No Content (successful update)
+        }
+        catch(KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    [HttpPost("ChangeOrderStatusToDeclined/{id}")] // Post : /api/Order/ChangeOrderStatusToDeclined/id
+    [HasPermission(Permissions.UpdateOrders)]
+    public async Task<IActionResult> ChangeOrderStatusToDeclined(int id)
+    {
+        try
+        {
+            await _serviceManager.orderService.ChangeOrderStatusToDeclined(id);
+            return NoContent(); // 204 No Content (successful update)
         }
         catch(KeyNotFoundException ex)
         {

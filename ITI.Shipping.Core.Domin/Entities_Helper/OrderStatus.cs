@@ -12,6 +12,8 @@ namespace ITI.Shipping.Core.Domin.Entities_Helper
         Pending,
         InProgress,
         Delivered,
-        Cancelled
+        Cancelled,
+        Declined
+
     }
 }

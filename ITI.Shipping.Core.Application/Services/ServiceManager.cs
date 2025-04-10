@@ -2,6 +2,7 @@
 using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
+using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
@@ -14,6 +15,7 @@ using ITI.Shipping.Core.Application.Abstraction.WeightSetting;
 using ITI.Shipping.Core.Application.Services.BranchServices;
 using ITI.Shipping.Core.Application.Services.CitySettingServices;
 using ITI.Shipping.Core.Application.Services.CourierReportServices;
+using ITI.Shipping.Core.Application.Services.CourierServices;
 using ITI.Shipping.Core.Application.Services.OrderReportServices;
 using ITI.Shipping.Core.Application.Services.OrderServices;
 using ITI.Shipping.Core.Application.Services.ProductServices;
@@ -47,6 +49,8 @@ namespace ITI.Shipping.Core.Application.Services
         private readonly Lazy<IOrderService> _orderService;
         private readonly Lazy<IProductService> _productService; 
         private readonly Lazy<IOrderReportService> _orderReportService;
+        private readonly Lazy<ICourierService> _CourierService;
+
 
 
 
@@ -63,6 +67,7 @@ namespace ITI.Shipping.Core.Application.Services
             _orderService= new Lazy<IOrderService>(() => new OrderService(unitOfWork,mapper,userManager,httpContextAccessor));
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork,mapper));
             _orderReportService = new Lazy<IOrderReportService>(()=> new OrderReportService(unitOfWork,mapper));
+            _CourierService = new Lazy<ICourierService>(() => new CourierService(unitOfWork,mapper,userManager));
         }
 
         public IBranchService BranchService => _branchService.Value;
@@ -86,5 +91,7 @@ namespace ITI.Shipping.Core.Application.Services
         public IProductService productService =>_productService.Value;
 
         public IOrderReportService orderReportService => _orderReportService.Value;
+
+        public ICourierService courierService => _CourierService.Value;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
+using ITI.Shipping.Core.Application.Abstraction.Courier.DTO;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
@@ -15,6 +16,7 @@ using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,6 +142,13 @@ namespace ITI.Shipping.Core.Application.Mapping
             .ForMember(dest => dest.OrderId,op => op.MapFrom(src => src.OrderId))
             .ReverseMap();
             #endregion
+
+            CreateMap<ApplicationUser,CourierDTO>()
+                .ForMember(dest => dest.CourierId,opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CourierName,opt => opt.MapFrom(src => src.FullName))
+                .ReverseMap();
+                
+
 
             CreateMap<AddEmployeeDTO,ApplicationUser>().AfterMap((src,dest) =>
             {

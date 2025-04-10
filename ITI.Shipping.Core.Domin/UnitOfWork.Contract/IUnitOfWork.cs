@@ -29,5 +29,6 @@ namespace ITI.Shipping.Core.Domin.UnitOfWork.Contract
         ISpecialCityCostRepository GetSpecialCityCostRepository();
         IOrderRepository GetOrderRepository();
         Task<int> CompleteAsync();
+        IWeightSettingRepository GetWeightSettingRepository();
     }
 }

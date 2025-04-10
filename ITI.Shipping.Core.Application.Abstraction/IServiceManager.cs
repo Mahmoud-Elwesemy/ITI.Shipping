@@ -1,5 +1,6 @@
 ﻿using ITI.Shipping.Core.Application.Abstraction.Branch;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
+using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
@@ -30,5 +31,6 @@ namespace ITI.Shipping.Core.Application.Abstraction
         public IOrderService orderService { get; }
         public IProductService productService { get; }
         public IOrderReportService orderReportService { get; }
+        public ICourierService courierService { get; }
     }
 }
