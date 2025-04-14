@@ -45,7 +45,7 @@ public class ProductController:ControllerBase
     }
     [HttpPut("{id}")] // Put : /api/Product/id
     [HasPermission(Permissions.UpdateOrders)]
-    public async Task<ActionResult> UpdateProduct(int id,[FromBody] ProductDTO DTO)
+    public async Task<ActionResult> UpdateProduct(int id,[FromBody] UpdateProductDTO DTO)
     {
         if(DTO == null || id != DTO.Id)
             return BadRequest("Invalid Product data.");

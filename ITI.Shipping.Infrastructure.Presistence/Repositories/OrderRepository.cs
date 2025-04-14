@@ -1,5 +1,6 @@
 ﻿using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.Repositories.contract;
 using ITI.Shipping.Infrastructure.Presistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +20,24 @@ public class OrderRepository:GenericRepository<Order,int>, IOrderRepository
         _Context = applicationContext;
     }
 
-    public async Task<IEnumerable<Order>> GetOrdersByStatus(OrderStatus status)
+    public async Task<IEnumerable<Order>> GetOrdersByStatus(OrderStatus status,Pramter pramter)
     {
-        var orders = _Context.Orders.Where(x => x.Status == status).ToListAsync();
+        var orders = _Context.Orders.Where(x => x.Status == status);
+
         if(orders == null)
         {
             return null!;
         }
-        return await orders;
+        if(pramter.PageSize != null && pramter.PageNumber != null)
+        {
+            return await orders
+                .Skip((pramter.PageNumber.Value - 1) * pramter.PageSize.Value)
+                .Take(pramter.PageSize.Value)
+                .ToListAsync();
+        }
+        else
+        {
+            return await orders.ToListAsync();
+        }
     }
 }
