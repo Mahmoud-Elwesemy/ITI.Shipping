@@ -3,6 +3,7 @@ using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
 using ITI.Shipping.Core.Application.Abstraction.Courier.DTO;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport.Model;
+using ITI.Shipping.Core.Application.Abstraction.Employee.Model;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Product.Model;
@@ -89,7 +90,6 @@ namespace ITI.Shipping.Core.Application.Mapping
             #endregion
             #region Configratio Of ShippingType
             CreateMap<ShippingType,ShippingTypeDTO>()
-                   .ForMember(des => des.OrdersId,opt => opt.MapFrom(src => src.Branches.Select(x => x.Id).ToList()))
                    .ReverseMap();
             #endregion
             #region Configratio Of WeightSetting
@@ -148,7 +148,8 @@ namespace ITI.Shipping.Core.Application.Mapping
                 .ForMember(dest => dest.CourierName,opt => opt.MapFrom(src => src.FullName))
                 .ReverseMap();
                 
-
+            CreateMap<ApplicationUser,EmployeeDTO>()
+                .ForMember(dest=>dest.BranchName,opt=>opt.MapFrom(src=>src.Branch!.Name)).ReverseMap();
 
             CreateMap<AddEmployeeDTO,ApplicationUser>().AfterMap((src,dest) =>
             {

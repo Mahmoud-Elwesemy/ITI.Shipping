@@ -3,6 +3,7 @@ using ITI.Shipping.Core.Domin.Repositories.contract;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
 using ITI.Shipping.Infrastructure.Presistence.Data;
 using ITI.Shipping.Infrastructure.Presistence.Repositories;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
     {
         private readonly ApplicationContext _context;
         private readonly ConcurrentDictionary<string, object> _repositories;
+        private readonly UserManager<ApplicationUser> _userManager;
         #region Try Using Lazy Way
         //private readonly Lazy<IGenericRepository<ApplicationUser,string>> _ApplicationUser;
         //private readonly Lazy<IGenericRepository<CitySetting,int>> _CitySetting;
@@ -28,10 +30,11 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
         //private readonly Lazy<IGenericRepository<ShippingType,int>> _ShippingType;
         //private readonly Lazy<IGenericRepository<WeightSetting,int>> _WeightSetting; 
         #endregion
-        public UnitOfWork(ApplicationContext Context)
+        public UnitOfWork(ApplicationContext Context,UserManager<ApplicationUser> userManager)
         {
             _context = Context;
-            _repositories = new ConcurrentDictionary<string, object>();
+            _repositories = new ConcurrentDictionary<string,object>();
+            _userManager = userManager;
             #region Try Using Lazy Way
             //_ApplicationUser = new Lazy<IGenericRepository<ApplicationUser,string>>(() => new GenericRepository<ApplicationUser,string>(_context));
             //_CitySetting = new Lazy<IGenericRepository<CitySetting,int>>(() => new GenericRepository<CitySetting,int>(_context));
@@ -101,6 +104,10 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
         public IWeightSettingRepository GetWeightSettingRepository()
         {
             return (IWeightSettingRepository) _repositories.GetOrAdd(typeof(WeightSetting).Name,new WeightSettingRepository(_context));
+        }
+        public IEmployeeRepository GetAllEmployeesAsync()
+        {
+            return (IEmployeeRepository) _repositories.GetOrAdd(typeof(ApplicationUser).Name,new EmployeeRepository(_context,_userManager));
         }
     }
 }

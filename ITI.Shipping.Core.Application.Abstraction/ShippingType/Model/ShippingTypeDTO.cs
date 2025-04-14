@@ -12,6 +12,4 @@ public class ShippingTypeDTO
     public decimal BaseCost { get; set; }
     public int Duration { get; set; }
     public DateTime CreatedAt { get; set; }
-    //------------- ICollection From Order ------------------------------
-    public List<int> OrdersId { get; set; } = [];
 }

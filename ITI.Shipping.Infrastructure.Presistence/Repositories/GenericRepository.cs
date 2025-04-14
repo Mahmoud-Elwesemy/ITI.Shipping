@@ -15,7 +15,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Repositories
     {
         
         
-        public readonly ApplicationContext _context;
+        public  ApplicationContext _context;
 
         public GenericRepository(ApplicationContext context)
         {

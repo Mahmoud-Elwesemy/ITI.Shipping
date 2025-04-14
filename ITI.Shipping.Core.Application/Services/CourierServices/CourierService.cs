@@ -2,6 +2,7 @@
 using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.Courier.DTO;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Entities_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -27,7 +28,7 @@ internal class CourierService:ICourierService
     public async Task<IEnumerable<CourierDTO>> GetCourierByBranch(int OrderId)
     {
        var order = await _unitOfWork.GetOrderRepository().GetByIdAsync(OrderId);
-        var Courieres = await _userManager.GetUsersInRoleAsync("Courier");
+        var Courieres = await _userManager.GetUsersInRoleAsync(DefaultRole.Courier);
         var couriersInBranch  = Courieres.Where(c => c.BranchId == order!.BranchId);
         var couriersDto = _mapper.Map<IEnumerable<CourierDTO>>(couriersInBranch);
         return couriersDto;

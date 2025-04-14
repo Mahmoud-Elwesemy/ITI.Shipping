@@ -83,7 +83,6 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
 
             var Allweightsetting = await _unitOfWork.GetWeightSettingRepository().GetAllWeightSetting();
             var weightsetting = Allweightsetting.FirstOrDefault();
-            //var MinWeight = weightsetting.MinWeight;
             decimal MaxWeight = weightsetting!.MaxWeight;
             decimal CostPerKG = weightsetting!.CostPerKg;
 
@@ -135,11 +134,13 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             if(currentUser != null && await _userManager.IsInRoleAsync(currentUser,DefaultRole.Merchant))
             {
                 DTO.status = OrderStatus.WaitingForConfirmation;
+                DTO.MerchantName = currentUser.Id;
 
             }
             else
             {
                 DTO.status = OrderStatus.Pending;
+                
             }
             await _unitOfWork.GetOrderRepository().AddAsync(_mapper.Map<Order>(DTO));
             await _unitOfWork.CompleteAsync();
@@ -203,6 +204,8 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
         {
             var Order = await _unitOfWork.GetOrderRepository().GetByIdAsync(OrderId);
             Order!.CourierId = courierId;
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext!.User);
+            Order!.EmployeeId = currentUser!.Id;
             _unitOfWork.GetOrderRepository().UpdateAsync(Order);
             await _unitOfWork.CompleteAsync();
         }
