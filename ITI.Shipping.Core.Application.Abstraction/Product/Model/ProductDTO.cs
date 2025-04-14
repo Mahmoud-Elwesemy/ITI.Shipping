@@ -13,4 +13,5 @@ public class ProductDTO
     public decimal Weight { get; set; }   
     public int Quantity { get; set; } = 0;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public int OrderId { get; set; }
 }

@@ -24,6 +24,10 @@ namespace ITI.Shipping.Core.Domin.UnitOfWork.Contract
         #endregion
         IGenericRepository<T,Tkey> GetRepository<T, Tkey>()
             where T : class where Tkey : IEquatable<Tkey>;
+        ICityRepository GetCityRepository();
+        ISpecialCourierRegionRepository GetSpecialCourierRegionRepository();
+        ISpecialCityCostRepository GetSpecialCityCostRepository();
+        IOrderRepository GetOrderRepository();
         Task<int> CompleteAsync();
     }
 }

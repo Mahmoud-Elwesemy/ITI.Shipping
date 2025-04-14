@@ -78,7 +78,24 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
 
         public async ValueTask DisposeAsync() => await _context.DisposeAsync();
 
+        public ICityRepository GetCityRepository()
+        {
+            return (ICityRepository) _repositories.GetOrAdd(typeof(CitySetting).Name,new CityRepository(_context));
+        }
 
+        public ISpecialCourierRegionRepository GetSpecialCourierRegionRepository()
+        {
+            return (ISpecialCourierRegionRepository) _repositories.GetOrAdd(typeof(SpecialCourierRegion).Name,new SpecialCityCostRepository(_context));
+        }
 
+        public ISpecialCityCostRepository GetSpecialCityCostRepository()
+        {
+            return (ISpecialCityCostRepository) _repositories.GetOrAdd(typeof(SpecialCityCost).Name,new SpecialCityCostRepository(_context));
+        }
+
+        public IOrderRepository GetOrderRepository()
+        {
+            return (IOrderRepository) _repositories.GetOrAdd(typeof(Order).Name,new OrderRepository(_context));
+        }
     }
 }

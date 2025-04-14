@@ -1,6 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCourierRegion.Model;
 using ITI.Shipping.Core.Application.Abstraction.WeightSetting.Model;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,18 +19,21 @@ public class WeightSettingController:ControllerBase
         _serviceManager = serviceManager;
     }
     [HttpGet] // Get : /api/WeightSetting
-    public async Task<ActionResult<IEnumerable<WeightSettingDTO>>> GetAllWeightSetting()
+    [HasPermission(Permissions.ViewSettings)]
+    public async Task<ActionResult<IEnumerable<WeightSettingDTO>>> GetAllWeightSetting([FromQuery] Pramter pramter)
     {
-        var allWeightSetting =await _serviceManager.weightSettingService.GetAllWeightSettingAsync();
+        var allWeightSetting =await _serviceManager.weightSettingService.GetAllWeightSettingAsync(pramter);
         return Ok(allWeightSetting);
     }
     [HttpGet("{id}")] // Get : /api/WeightSetting/id
+    [HasPermission(Permissions.ViewSettings)]
     public async Task<ActionResult<WeightSettingDTO>> GetWeightSetting(int id)
     {
         var WeightSetting = await _serviceManager.weightSettingService.GetWeightSettingAsync(id);
         return Ok(WeightSetting);
     }
     [HttpPost] // Post : /api/WeightSetting
+    [HasPermission(Permissions.AddSettings)]
     public async Task<ActionResult<WeightSettingDTO>> AddWeightSetting(WeightSettingDTO DTO)
     {
         if(DTO == null)
@@ -36,6 +42,7 @@ public class WeightSettingController:ControllerBase
         return Ok();
     }
     [HttpPut("{id}")] // Put : /api/WeightSetting/id
+    [HasPermission(Permissions.UpdateSettings)]
     public async Task<ActionResult<WeightSettingDTO>> UpdateWeightSetting(int id,[FromBody] WeightSettingDTO DTO)
     {
         if(DTO == null || id != DTO.Id)
@@ -51,6 +58,7 @@ public class WeightSettingController:ControllerBase
         }
     }
     [HttpDelete("{id}")] // Delete : /api/WeightSetting/id
+    [HasPermission(Permissions.DeleteSettings)]
     public async Task<ActionResult> DeleteWeightSetting(int id)
     {
         try

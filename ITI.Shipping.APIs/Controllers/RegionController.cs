@@ -1,7 +1,10 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.Region.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +21,14 @@ namespace ITI.Shipping.APIs.Controllers
             _serviceManager = serviceManager;
         }
         [HttpGet] // Get : /api/Region
-        public async Task <ActionResult<IEnumerable<RegionDto>>> GetAllRegion()
+        [HasPermission(Permissions.ViewRegions)]
+        public async Task <ActionResult<IEnumerable<RegionDto>>> GetAllRegion([FromQuery] Pramter pramter)
         {
-            var regions = await _serviceManager.RegionService.GetRegionsAsync();
+            var regions = await _serviceManager.RegionService.GetRegionsAsync(pramter);
             return Ok(regions);
         }
         [HttpGet("{id}")] // Get : /api/Region/id
+        [HasPermission(Permissions.ViewRegions)]
         public async Task <ActionResult<RegionDto>> GetRegion(int id)
         {
             var region = await _serviceManager.RegionService.GetRegionAsync(id);
@@ -34,6 +39,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok(region);
         }
         [HttpPost] // Post : /api/Region
+        [HasPermission(Permissions.AddRegions)]
         public async Task<ActionResult<RegionDto>> AddRegion(RegionDto DTO)
         {
             if(DTO == null)
@@ -42,6 +48,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok();
         }
         [HttpPut("{id}")] // Put : /api/Region/id
+        [HasPermission(Permissions.UpdateRegions)]
         public async Task<ActionResult<RegionDto>> UpdateRegion(int id,[FromBody] RegionDto DTO)
         {
             if(DTO == null || id != DTO.Id)
@@ -57,6 +64,7 @@ namespace ITI.Shipping.APIs.Controllers
             }
         }
         [HttpDelete("{id}")] // Delete : /api/Region/id
+        [HasPermission(Permissions.DeleteRegions)]
         public async Task<ActionResult> DeletRegion(int id)
         {
             try

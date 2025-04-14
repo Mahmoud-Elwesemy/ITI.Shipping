@@ -2,7 +2,9 @@
 using ITI.Shipping.Core.Application.Abstraction.Branch;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,9 @@ namespace ITI.Shipping.Core.Application.Services.BranchServices
             _UnitOfWork = UnitOfWork;
             _Mapper = mapper;
         }
-        public async Task<IEnumerable<BranchDTO>> GetBranchesAsync()
+        public async Task<IEnumerable<BranchDTO>> GetBranchesAsync(Pramter pramter)
         {
-            return _Mapper.Map<IEnumerable<BranchDTO>>(await _UnitOfWork.GetRepository<Branch,int>().GetAllAsync());
+            return _Mapper.Map<IEnumerable<BranchDTO>>(await _UnitOfWork.GetRepository<Branch,int>().GetAllAsync(pramter));
         }
         public async Task<BranchDTO> GetBranchAsync(int id)
         {

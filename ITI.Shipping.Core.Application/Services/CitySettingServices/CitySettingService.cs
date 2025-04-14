@@ -3,7 +3,9 @@ using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,22 +24,22 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
             _UnitOfWork = UnitOfWork;
             _Mapper = mapper;
         }
-        public async Task<IEnumerable<CitySettingDTO>> GetCitySettingsAsync()
+        public async Task<IEnumerable<CitySettingDTO>> GetCitySettingsAsync(Pramter pramter)
         {
-            return _Mapper.Map<IEnumerable<CitySettingDTO>>(await _UnitOfWork.GetRepository<CitySetting,int>().GetAllAsync());
+            return _Mapper.Map<IEnumerable<CitySettingDTO>>(await _UnitOfWork.GetCityRepository().GetAllAsync(pramter));
         }
         public async Task<CitySettingDTO> GetCitySettingAsync(int id)
         {
-            return _Mapper.Map<CitySettingDTO>(await _UnitOfWork.GetRepository<CitySetting,int>().GetByIdAsync(id));
+            return _Mapper.Map<CitySettingDTO>(await _UnitOfWork.GetCityRepository().GetByIdAsync(id));
         }
         public async Task AddAsync(CitySettingToAddDTO DTO)
         {
-            await _UnitOfWork.GetRepository<CitySetting,int>().AddAsync(_Mapper.Map<CitySetting>(DTO));
+            await _UnitOfWork.GetCityRepository().AddAsync(_Mapper.Map<CitySetting>(DTO));
             await _UnitOfWork.CompleteAsync();
         }
         public async Task UpdateAsync(CitySettingToUpdateDTO DTO)
         {
-            var CitySettingRepo=_UnitOfWork.GetRepository<CitySetting,int>();
+            var CitySettingRepo=_UnitOfWork.GetCityRepository();
             var existingCitySetting = await CitySettingRepo.GetByIdAsync(DTO.Id);
             if(existingCitySetting == null)
             {
@@ -49,7 +51,7 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
         }
         public async Task DeleteAsync(int id)
         {
-            var CitySettingRepo = _UnitOfWork.GetRepository<CitySetting,int>();
+            var CitySettingRepo = _UnitOfWork.GetCityRepository ();
             var existingCitySetting = await CitySettingRepo.GetByIdAsync(id);
             if(existingCitySetting == null)
             {
@@ -59,7 +61,10 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
             await _UnitOfWork.CompleteAsync();
         }
 
-
-
+        public async Task<IEnumerable<CitySettingDTO>> GetCityByGovernorateName(int regionId)
+        {
+            var cities = await _UnitOfWork.GetCityRepository().GetCityByGovernorateName(regionId);
+            return _Mapper.Map<IEnumerable<CitySettingDTO>>(cities);
+        }   
     }
 }

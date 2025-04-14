@@ -1,6 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCourierRegion.Model;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,18 +20,21 @@ namespace ITI.Shipping.APIs.Controllers
             _serviceManager = serviceManager;
         }
         [HttpGet] // Get : /api/SpecialCourierRegion
-        public async Task<ActionResult<IEnumerable<SpecialCourierRegionDTO>>> GetAllSpecialCourierRegions()
+        [HasPermission(Permissions.ViewRegions)]
+        public async Task<ActionResult<IEnumerable<SpecialCourierRegionDTO>>> GetAllSpecialCourierRegions([FromQuery] Pramter pramter)
         {
-            var SpecialCourierRegions = await _serviceManager.SpecialCourierRegionService.GetSpecialCourierRegionsAsync();
+            var SpecialCourierRegions = await _serviceManager.SpecialCourierRegionService.GetSpecialCourierRegionsAsync(pramter);
             return Ok(SpecialCourierRegions);
         }
         [HttpGet("{id}")] // Get : /api/SpecialCourierRegion/id
+        [HasPermission(Permissions.ViewRegions)]
         public async Task<ActionResult<SpecialCourierRegionDTO>> GetSpecialCourierRegion(int id)
         {
             var SpecialCourierRegion = await _serviceManager.SpecialCourierRegionService.GetSpecialCourierRegionAsync(id);
             return Ok(SpecialCourierRegion);
         }
         [HttpPost] // Post : /api/SpecialCourierRegion
+        [HasPermission(Permissions.AddRegions)]
         public async Task<ActionResult<SpecialCourierRegionDTO>> AddSpecialCourierRegion(SpecialCourierRegionDTO DTO)
         {
             if(DTO == null)
@@ -37,6 +43,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok();
         }
         [HttpPut("{id}")] // Put : /api/SpecialCourierRegion/id
+        [HasPermission(Permissions.UpdateRegions)]
         public async Task<ActionResult> UpdateSpecialCourierRegion(int id ,[FromBody] SpecialCourierRegionDTO DTO)
         {
             if(DTO == null || id != DTO.Id)
@@ -52,6 +59,7 @@ namespace ITI.Shipping.APIs.Controllers
             }
         }
         [HttpDelete("{id}")] // Delete : /api/SpecialCourierRegion/id
+        [HasPermission(Permissions.DeleteRegions)]
         public async Task<ActionResult> DeleteSpecialCourierRegion(int id)
         {
             try

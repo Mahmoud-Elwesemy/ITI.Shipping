@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Shipping.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Shipping.Infrastructure.Presistence", "ITI.Shipping.Infrastructure.Presistence\ITI.Shipping.Infrastructure.Presistence.csproj", "{3EE20489-32A9-4EB5-AF75-6484E7037946}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{557DB1A2-696B-4E31-8A10-FE3935F25F39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{3EE20489-32A9-4EB5-AF75-6484E7037946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EE20489-32A9-4EB5-AF75-6484E7037946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EE20489-32A9-4EB5-AF75-6484E7037946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557DB1A2-696B-4E31-8A10-FE3935F25F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557DB1A2-696B-4E31-8A10-FE3935F25F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557DB1A2-696B-4E31-8A10-FE3935F25F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557DB1A2-696B-4E31-8A10-FE3935F25F39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{4C43069B-6913-4518-A564-20827A94EB35} = {B738294F-FB59-4834-ABA0-503C6C73AAC4}
 		{28A2DE1A-2202-445D-B3EA-8999EF1A41BE} = {D8B162F3-D181-4DD1-9BB9-CD04D7CE05ED}
 		{3EE20489-32A9-4EB5-AF75-6484E7037946} = {D8B162F3-D181-4DD1-9BB9-CD04D7CE05ED}
+		{557DB1A2-696B-4E31-8A10-FE3935F25F39} = {2A628073-2670-40AA-88AB-47AAD18EB1C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36F685B0-E8C1-4140-8342-0E96D2247D72}

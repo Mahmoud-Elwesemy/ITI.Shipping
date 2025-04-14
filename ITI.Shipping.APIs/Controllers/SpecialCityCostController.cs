@@ -1,7 +1,10 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,18 +20,21 @@ public class SpecialCityCostController:ControllerBase
         _serviceManager = serviceManager;
     }
     [HttpGet] // Get : /api/SpecialCityCost
-    public async Task<ActionResult<IEnumerable<SpecialCityCostDTO>>> GetAllSpecialCityCost()
+    [HasPermission(Permissions.ViewCities)]
+    public async Task<ActionResult<IEnumerable<SpecialCityCostDTO>>> GetAllSpecialCityCost([FromQuery] Pramter pramter)
     {
-        var AllSpecialCityCost = await _serviceManager.specialCityCostService.GetAllSpecialCityCostAsync();
+        var AllSpecialCityCost = await _serviceManager.specialCityCostService.GetAllSpecialCityCostAsync(pramter);
         return Ok(AllSpecialCityCost);
     }
     [HttpGet("{id}")] // Get : /api/SpecialCityCost/id
+    [HasPermission(Permissions.ViewCities)]
     public async Task <ActionResult<SpecialCityCostDTO>> GetSpecialCityCost(int id)
     {
         var SpecialCityCost = await _serviceManager.specialCityCostService.GetSpecialCityCostAsync(id);
         return Ok(SpecialCityCost);
     }
     [HttpPost] // Post : /api/SpecialCityCost
+    [HasPermission(Permissions.AddCities)]
     public async Task<ActionResult<SpecialCityCostDTO>> AddSpecialCityCost(SpecialCityCostDTO DTO)
     {
         if(DTO == null)
@@ -37,10 +43,11 @@ public class SpecialCityCostController:ControllerBase
         return Ok();
     }
     [HttpPut("{id}")] // Put : /api/SpecialCityCost/id 
+    [HasPermission(Permissions.UpdateCities)]
     public async Task<ActionResult> UpdateSpecialCityCost(int id,[FromBody] SpecialCityCostDTO DTO)
     {
         if(DTO == null || id != DTO.Id)
-            return BadRequest("Invalid branch data.");
+            return BadRequest("Invalid SpecialCityCost data.");
         try
         {
             await _serviceManager.specialCityCostService.UpdateAsync(DTO);
@@ -52,6 +59,7 @@ public class SpecialCityCostController:ControllerBase
         }
     }
     [HttpDelete("{id}")] // Delete : /api/SpecialCityCost/id
+    [HasPermission(Permissions.DeleteCities)]
     public async Task<ActionResult> DeleteSpecialCityCost(int id)
     {
         try

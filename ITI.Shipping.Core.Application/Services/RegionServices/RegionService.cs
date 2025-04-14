@@ -2,7 +2,9 @@
 using ITI.Shipping.Core.Application.Abstraction.Region;
 using ITI.Shipping.Core.Application.Abstraction.Region.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,9 @@ namespace ITI.Shipping.Core.Application.Services.RegionServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<RegionDto>> GetRegionsAsync()
+        public async Task<IEnumerable<RegionDto>> GetRegionsAsync(Pramter pramter)
         {
-           return  _mapper.Map<IEnumerable<RegionDto>>(await _unitOfWork.GetRepository<Region,int>().GetAllAsync());
+           return  _mapper.Map<IEnumerable<RegionDto>>(await _unitOfWork.GetRepository<Region,int>().GetAllAsync(pramter));
         }
         public async Task<RegionDto> GetRegionAsync(int id)
         {

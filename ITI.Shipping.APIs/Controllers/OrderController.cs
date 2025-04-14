@@ -1,8 +1,12 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace ITI.Shipping.APIs.Controllers;
 [Route("api/[controller]")]
@@ -16,13 +20,15 @@ public class OrderController:ControllerBase
         _serviceManager = serviceManager;
     }
     [HttpGet] // Get : /api/Order
-    public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrder()
+    [HasPermission(Permissions.ViewOrders)]
+    public async Task<ActionResult<IEnumerable<OrderWithProductsDto>>> GetAllOrder([FromQuery] Pramter pramter)
     {
-        var Orders = await _serviceManager.orderService.GetOrdersAsync();
+        var Orders = await _serviceManager.orderService.GetOrdersAsync(pramter);
         return Ok(Orders);
     }
     [HttpGet("{id}")] // Get : /api/Order/id
-    public async Task<ActionResult<OrderDTO>> GetOrder(int id)
+    [HasPermission(Permissions.ViewOrders)]
+    public async Task<ActionResult<OrderWithProductsDto>> GetOrder(int id)
     {
         var Order = await _serviceManager.orderService.GetOrderAsync(id);
         if(Order == null)
@@ -30,15 +36,17 @@ public class OrderController:ControllerBase
         return Ok(Order);
     }
     [HttpPost] // Post : /api/Order
-    public async Task<ActionResult<OrderDTO>> AddOrder(OrderDTO DTO)
+    [HasPermission(Permissions.AddOrders)]
+    public async Task<ActionResult<addOrderDto>> AddOrder(addOrderDto DTO , [FromQuery] Pramter pramter)
     {
         if(DTO == null)
-            return BadRequest("Invalid branch data");
-        await _serviceManager.orderService.AddAsync(DTO);
+            return BadRequest("Invalid Order data");
+        await _serviceManager.orderService.AddAsync(DTO,pramter);
         return Ok();
     }
     [HttpPut("{id}")] // Put : /api/Order/id
-    public async Task<ActionResult> UpdateOrder(int id,[FromBody] OrderDTO DTO)
+    [HasPermission(Permissions.UpdateOrders)]
+    public async Task<ActionResult> UpdateOrder(int id,[FromBody] updateOrderDto DTO)
     {
         if(DTO == null || id != DTO.Id)
             return BadRequest("Invalid branch data.");
@@ -53,6 +61,7 @@ public class OrderController:ControllerBase
         }
     }
     [HttpDelete("{id}")] // Delete : /api/Order/id
+    [HasPermission(Permissions.DeleteOrders)]
     public async Task<ActionResult> DeleteOrder(int id)
     {
         try

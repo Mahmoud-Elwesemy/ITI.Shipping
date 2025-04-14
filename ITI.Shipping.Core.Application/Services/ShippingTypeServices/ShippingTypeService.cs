@@ -2,7 +2,9 @@
 using ITI.Shipping.Core.Application.Abstraction.ShippingType;
 using ITI.Shipping.Core.Application.Abstraction.ShippingType.Model;
 using ITI.Shipping.Core.Domin.Entities;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,9 @@ namespace ITI.Shipping.Core.Application.Services.ShippingTypeServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<ShippingTypeDTO>> GetAllShippingTypeAsync()
+        public async Task<IEnumerable<ShippingTypeDTO>> GetAllShippingTypeAsync(Pramter pramter)
         {
-            return _mapper.Map<IEnumerable<ShippingTypeDTO>>(await _unitOfWork.GetRepository<ShippingType,int>().GetAllAsync());
+            return _mapper.Map<IEnumerable<ShippingTypeDTO>>(await _unitOfWork.GetRepository<ShippingType,int>().GetAllAsync(pramter));
         }
 
         public async Task<ShippingTypeDTO> GetShippingTypeAsync(int id)

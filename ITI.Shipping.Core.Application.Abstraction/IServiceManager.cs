@@ -2,6 +2,8 @@
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
 using ITI.Shipping.Core.Application.Abstraction.Order;
+using ITI.Shipping.Core.Application.Abstraction.OrderReport;
+using ITI.Shipping.Core.Application.Abstraction.Product;
 using ITI.Shipping.Core.Application.Abstraction.Region;
 using ITI.Shipping.Core.Application.Abstraction.ShippingType;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost;
@@ -26,5 +28,7 @@ namespace ITI.Shipping.Core.Application.Abstraction
         public IShippingTypeService shippingTypeService { get; }
         public IWeightSettingService weightSettingService { get; }
         public IOrderService orderService { get; }
+        public IProductService productService { get; }
+        public IOrderReportService orderReportService { get; }
     }
 }

@@ -1,6 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction;
+﻿using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction;
 using ITI.Shipping.Core.Application.Abstraction.Branch;
 using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
+using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +21,14 @@ namespace ITI.Shipping.APIs.Controllers
         }
 
         [HttpGet] // Get : /api/Branch
-        public async Task<ActionResult<IEnumerable<BranchDTO>>> GetBranches()
+        [HasPermission (Permissions.ViewBranches)]
+        public async Task<ActionResult<IEnumerable<BranchDTO>>> GetBranches([FromQuery] Pramter pramter)
         {
-            var branches = await _serviceManager.BranchService.GetBranchesAsync();
+            var branches = await _serviceManager.BranchService.GetBranchesAsync(pramter);
             return Ok(branches);
         }
         [HttpGet("{id}")] // Get : /api/Branch/id
+        [HasPermission(Permissions.ViewBranches)]
         public async Task<ActionResult<BranchDTO>> GetBranch(int id)
         {
             var branch = await _serviceManager.BranchService.GetBranchAsync(id);
@@ -34,6 +39,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok(branch);
         }
         [HttpPost] // Post : /api/Branch
+        [HasPermission(Permissions.AddBranches)]
         public async Task<ActionResult<BranchDTO>> AddBranch(BranchToAddDTO DTO)
         {
             if(DTO == null)
@@ -42,6 +48,7 @@ namespace ITI.Shipping.APIs.Controllers
             return Ok();
         }
         [HttpPut("{id}")] // Put : /api/Branch/id
+        [HasPermission(Permissions.UpdateBranches)]
         public async Task<ActionResult> UpdateBranch(int id,[FromBody] BranchToUpdateDTO DTO)
         {
             if(DTO == null || id != DTO.Id)
@@ -57,6 +64,7 @@ namespace ITI.Shipping.APIs.Controllers
             }
         }
         [HttpDelete("{id}")] // Delete : /api/Branch/id
+        [HasPermission(Permissions.DeleteBranches)]
         public async Task<ActionResult> DeleteBranch(int id)
         {
             try

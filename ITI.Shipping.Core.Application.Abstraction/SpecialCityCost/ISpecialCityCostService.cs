@@ -1,5 +1,6 @@
 ﻿using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost.Model;
+using ITI.Shipping.Core.Domin.Pramter_Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ITI.Shipping.Core.Application.Abstraction.SpecialCityCost
 {
     public interface ISpecialCityCostService
     {
-        Task<IEnumerable<SpecialCityCostDTO>> GetAllSpecialCityCostAsync();
+        Task<IEnumerable<SpecialCityCostDTO>> GetAllSpecialCityCostAsync(Pramter pramter);
         Task<SpecialCityCostDTO> GetSpecialCityCostAsync(int id);
         Task AddAsync(SpecialCityCostDTO DTO);
         Task UpdateAsync(SpecialCityCostDTO DTO);

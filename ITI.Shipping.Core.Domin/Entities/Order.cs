@@ -16,9 +16,11 @@ namespace ITI.Shipping.Core.Domin.Entities
         public decimal TotalWeight { get; set; }
         [Required]
         public decimal OrderCost { get; set; }
+        public decimal ShippingCost { get; set; }
         public string? Notes { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsOutOfCityShipping { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
         //----------- Enum OrderStatus---------------------------------
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         //----------- Ids From User ---------------------------------

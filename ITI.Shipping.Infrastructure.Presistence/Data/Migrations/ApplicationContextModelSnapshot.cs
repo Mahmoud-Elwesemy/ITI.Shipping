@@ -73,6 +73,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("CanceledOrder")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("CityId")
@@ -86,6 +87,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("DeductionCompanyFromOrder")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("DeductionTypes")
@@ -130,6 +132,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal?>("PickupPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("RegionId")
@@ -165,6 +168,27 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0195d439-9ca1-7873-9c14-a4bc1c201593",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0195d43b-a808-757b-9c3e-bf90c6091133",
+                            CreatedAt = new DateTime(2025, 4, 7, 6, 9, 21, 317, DateTimeKind.Local).AddTicks(2240),
+                            Email = "Weso430@gmail.com",
+                            EmailConfirmed = false,
+                            FullName = "Weso Admin",
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "WESO430@GMAIL.COM",
+                            NormalizedUserName = "WESO430@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDkwfiAN85HZq4NVHLIESJNCT9+jeZWRwSMTJ4NkrvDjChJPLCPCstbbrsF2xF4diQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0195d43be3f271878cc37be7dfc34361",
+                            TwoFactorEnabled = false,
+                            UserName = "Weso430@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("ITI.Shipping.Core.Domin.Entities.Branch", b =>
@@ -219,9 +243,11 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("StandardShippingCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("pickupShippingCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -302,6 +328,9 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsOutOfCityShipping")
                         .HasColumnType("bit");
 
@@ -313,6 +342,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OrderCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("PaymentType")
@@ -321,6 +351,9 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     b.Property<int?>("RegionId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("ShippingCost")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("ShippingTypeId")
                         .HasColumnType("int");
 
@@ -328,6 +361,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -392,6 +426,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Weight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -434,6 +469,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("BaseCost")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -473,6 +509,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -517,15 +554,18 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("CostPerKg")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("MaxWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MinWeight")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -556,6 +596,372 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "permissions",
+                            ClaimValue = "Permissions:ViewPermissions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "permissions",
+                            ClaimValue = "Permissions:AddPermissions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "permissions",
+                            ClaimValue = "Permissions:UpdatePermissions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "permissions",
+                            ClaimValue = "Permissions:DeletePermissions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "permissions",
+                            ClaimValue = "Settings:ViewSettings",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "permissions",
+                            ClaimValue = "Settings:AddSettings",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "permissions",
+                            ClaimValue = "Settings:UpdateSettings",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "permissions",
+                            ClaimValue = "Settings:DeleteSettings",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClaimType = "permissions",
+                            ClaimValue = "Bank:ViewBank",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClaimType = "permissions",
+                            ClaimValue = "Bank:AddBank",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClaimType = "permissions",
+                            ClaimValue = "Bank:UpdateBank",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ClaimType = "permissions",
+                            ClaimValue = "Bank:DeleteBank",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClaimType = "permissions",
+                            ClaimValue = "MoneySafe:ViewMoneySafe",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClaimType = "permissions",
+                            ClaimValue = "MoneySafe:AddMoneySafe",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ClaimType = "permissions",
+                            ClaimValue = "MoneySafe:UpdateMoneySafe",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ClaimType = "permissions",
+                            ClaimValue = "MoneySafe:DeleteMoneySafe",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ClaimType = "permissions",
+                            ClaimValue = "Branches:ViewBranches",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ClaimType = "permissions",
+                            ClaimValue = "Branches:AddBranches",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ClaimType = "permissions",
+                            ClaimValue = "Branches:UpdateBranches",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ClaimType = "permissions",
+                            ClaimValue = "Branches:DeleteBranches",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ClaimType = "permissions",
+                            ClaimValue = "Employees:ViewEmployees",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ClaimType = "permissions",
+                            ClaimValue = "Employees:AddEmployees",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ClaimType = "permissions",
+                            ClaimValue = "Employees:UpdateEmployees",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ClaimType = "permissions",
+                            ClaimValue = "Employees:DeleteEmployees",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ClaimType = "permissions",
+                            ClaimValue = "Merchants:ViewMerchants",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ClaimType = "permissions",
+                            ClaimValue = "Merchants:AddMerchants",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ClaimType = "permissions",
+                            ClaimValue = "Merchants:UpdateMerchants",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ClaimType = "permissions",
+                            ClaimValue = "Merchants:DeleteMerchants",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ClaimType = "permissions",
+                            ClaimValue = "Couriers:ViewCouriers",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ClaimType = "permissions",
+                            ClaimValue = "Couriers:AddCouriers",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ClaimType = "permissions",
+                            ClaimValue = "Couriers:UpdateCouriers",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ClaimType = "permissions",
+                            ClaimValue = "Couriers:DeleteCouriers",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ClaimType = "permissions",
+                            ClaimValue = "Regions:ViewRegions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ClaimType = "permissions",
+                            ClaimValue = "Regions:AddRegions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            ClaimType = "permissions",
+                            ClaimValue = "Regions:UpdateRegions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            ClaimType = "permissions",
+                            ClaimValue = "Regions:DeleteRegions",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ClaimType = "permissions",
+                            ClaimValue = "Cities:ViewCities",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            ClaimType = "permissions",
+                            ClaimValue = "Cities:AddCities",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ClaimType = "permissions",
+                            ClaimValue = "Cities:UpdateCities",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ClaimType = "permissions",
+                            ClaimValue = "Cities:DeleteCities",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:ViewOrders",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:AddOrders",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:UpdateOrders",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            ClaimType = "permissions",
+                            ClaimValue = "Orders:DeleteOrders",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            ClaimType = "permissions",
+                            ClaimValue = "OrderReports:ViewOrderReports",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            ClaimType = "permissions",
+                            ClaimValue = "OrderReports:AddOrderReports",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            ClaimType = "permissions",
+                            ClaimValue = "OrderReports:UpdateOrderReports",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            ClaimType = "permissions",
+                            ClaimValue = "OrderReports:DeleteOrderReports",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            ClaimType = "permissions",
+                            ClaimValue = "Accounts:ViewAccounts",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            ClaimType = "permissions",
+                            ClaimValue = "Accounts:AddAccounts",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            ClaimType = "permissions",
+                            ClaimValue = "Accounts:UpdateAccounts",
+                            RoleId = "admin-role"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            ClaimType = "permissions",
+                            ClaimValue = "Accounts:DeleteAccounts",
+                            RoleId = "admin-role"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -618,6 +1024,13 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "0195d439-9ca1-7873-9c14-a4bc1c201593",
+                            RoleId = "admin-role"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -5,6 +5,7 @@ using ITI.Shipping.Core.Application.Abstraction.CitySetting;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
+using ITI.Shipping.Core.Application.Abstraction.Product;
 using ITI.Shipping.Core.Application.Abstraction.Region;
 using ITI.Shipping.Core.Application.Abstraction.ShippingType;
 using ITI.Shipping.Core.Application.Abstraction.SpecialCityCost;
@@ -13,13 +14,17 @@ using ITI.Shipping.Core.Application.Abstraction.WeightSetting;
 using ITI.Shipping.Core.Application.Services.BranchServices;
 using ITI.Shipping.Core.Application.Services.CitySettingServices;
 using ITI.Shipping.Core.Application.Services.CourierReportServices;
+using ITI.Shipping.Core.Application.Services.OrderReportServices;
 using ITI.Shipping.Core.Application.Services.OrderServices;
+using ITI.Shipping.Core.Application.Services.ProductServices;
 using ITI.Shipping.Core.Application.Services.RegionServices;
 using ITI.Shipping.Core.Application.Services.ShippingTypeServices;
 using ITI.Shipping.Core.Application.Services.SpecialCityCostServices;
 using ITI.Shipping.Core.Application.Services.SpecialCourierRegionServices;
 using ITI.Shipping.Core.Application.Services.WeightSettingServices;
+using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.UnitOfWork.Contract;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +44,9 @@ namespace ITI.Shipping.Core.Application.Services
         private readonly Lazy<IShippingTypeService> _shippingTypeService;
         private readonly Lazy<IWeightSettingService> _weightSettingService;
         private readonly Lazy<IOrderService> _orderService;
-        //private readonly Lazy<IOrderReportService> _orderReportService;
-        public ServiceManager(IUnitOfWork unitOfWork , IMapper mapper)
+        private readonly Lazy<IProductService> _productService; 
+        private readonly Lazy<IOrderReportService> _orderReportService;
+        public ServiceManager(IUnitOfWork unitOfWork , IMapper mapper , UserManager<ApplicationUser> userManager)
         {
             _branchService = new Lazy<IBranchService>(() => new BranchService(unitOfWork,mapper));
             _citySettingService = new Lazy<ICitySettingService>(() => new CitySettingService(unitOfWork,mapper));
@@ -50,8 +56,9 @@ namespace ITI.Shipping.Core.Application.Services
             _SpecialCityCostService = new Lazy<ISpecialCityCostService>(() => new SpecialCityCostService(unitOfWork,mapper));
             _shippingTypeService =new Lazy<IShippingTypeService> (() => new ShippingTypeService(unitOfWork,mapper));
             _weightSettingService = new Lazy<IWeightSettingService>(() => new WeightSettingService(unitOfWork,mapper));
-            _orderService= new Lazy<IOrderService>(() => new OrderService(unitOfWork,mapper));
-            //_courierReportService = new Lazy<IOrderReportService>(()=> new OrderReportServices(unitOfWork,mapper));
+            _orderService= new Lazy<IOrderService>(() => new OrderService(unitOfWork,mapper,userManager));
+            _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork,mapper));
+            _orderReportService = new Lazy<IOrderReportService>(()=> new OrderReportService(unitOfWork,mapper));
         }
 
         public IBranchService BranchService => _branchService.Value;
@@ -71,5 +78,9 @@ namespace ITI.Shipping.Core.Application.Services
         public IWeightSettingService weightSettingService => _weightSettingService.Value;
 
         public IOrderService orderService => _orderService.Value;
+
+        public IProductService productService =>_productService.Value;
+
+        public IOrderReportService orderReportService => _orderReportService.Value;
     }
 }
