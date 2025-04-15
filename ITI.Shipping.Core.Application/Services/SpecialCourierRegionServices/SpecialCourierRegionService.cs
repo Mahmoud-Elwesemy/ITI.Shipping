@@ -23,21 +23,23 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCourierRegionServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        // Get All SpecialCourierRegions
         public async Task<IEnumerable<SpecialCourierRegionDTO>> GetSpecialCourierRegionsAsync(Pramter pramter)
         {
             return  _mapper.Map<IEnumerable<SpecialCourierRegionDTO>>(await _unitOfWork.GetRepository<SpecialCourierRegion,int>().GetAllAsync(pramter));
         }
-
+        // Get SpecialCourierRegion By Id
         public async Task<SpecialCourierRegionDTO> GetSpecialCourierRegionAsync(int id)
         {
             return _mapper.Map<SpecialCourierRegionDTO>(await _unitOfWork.GetRepository<SpecialCourierRegion,int>().GetByIdAsync(id));
         }
+        // Add SpecialCourierRegion
         public async Task AddAsync(SpecialCourierRegionDTO DTO)
         {
             await _unitOfWork.GetRepository<SpecialCourierRegion,int>().AddAsync(_mapper.Map<SpecialCourierRegion>(DTO));
             await _unitOfWork.CompleteAsync();
         }
-
+        // Update SpecialCourierRegion
         public async Task UpdateAsync(SpecialCourierRegionDTO DTO)
         {
             var SpecialCourierRegionRepo = _unitOfWork.GetRepository<SpecialCourierRegion,int>();
@@ -48,6 +50,7 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCourierRegionServices
             SpecialCourierRegionRepo.UpdateAsync(existingSpecialCourierRegion);
             await _unitOfWork.CompleteAsync();
         }
+        // Delete SpecialCourierRegion
         public async Task DeleteAsync(int id)
         {
             var SpecialCourierRegionRepo = _unitOfWork.GetRepository<SpecialCourierRegion,int>();

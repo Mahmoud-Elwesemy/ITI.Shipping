@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction.Branch.Models
 {
     public class BranchToUpdateDTO

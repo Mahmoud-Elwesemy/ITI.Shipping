@@ -24,21 +24,22 @@ namespace ITI.Shipping.Core.Application.Services.ProductServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        // Get All Products
         public async Task<IEnumerable<ProductDTO>> GetProductsAsync(Pramter pramter)
         {
             return _mapper.Map<IEnumerable<ProductDTO>>(await _unitOfWork.GetRepository<Product,int>().GetAllAsync(pramter));
         }
+        // Get Product By Id
         public async Task<ProductDTO> GetProductAsync(int id)
         {
             return _mapper.Map<ProductDTO>(await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(id));
         }
-
+        // Add Product  
         public async Task AddAsync(ProductDTO DTO)
         {
             await _unitOfWork.GetRepository<Product,int>().AddAsync(_mapper.Map<Product>(DTO));
         }
-
+        // Update Product
         public async Task UpdateAsync(UpdateProductDTO DTO)
         {
             var ProductRepo = _unitOfWork.GetRepository<Product,int>();
@@ -52,7 +53,7 @@ namespace ITI.Shipping.Core.Application.Services.ProductServices
             ProductRepo.UpdateAsync(existingProduct);
             await _unitOfWork.CompleteAsync();
         }
-
+        // Delete Product
         public async Task DeleteAsync(int id)
         {
             var ProductRepo = _unitOfWork.GetRepository<Product,int>();
@@ -63,7 +64,5 @@ namespace ITI.Shipping.Core.Application.Services.ProductServices
             await ProductRepo.DeleteAsync(id);
             await _unitOfWork.CompleteAsync();
         }
-
-
     }
 }

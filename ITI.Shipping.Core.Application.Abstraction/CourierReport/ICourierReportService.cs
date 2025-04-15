@@ -6,12 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction.CourierReport
 {
     public interface ICourierReportService
     {
-
         Task<IEnumerable<GetAllCourierOrderCountDto>> GetAllCourierReportsAsync(Pramter pramter);
         Task<CourierReportDto> GetCourierReportByIdAsync(int id ,Pramter pramter);
     }

@@ -11,8 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace ITI.Shipping.Core.Application.EmployeeService;
+namespace ITI.Shipping.Core.Application.Services.EmployeeService;
 public class employeeService:IEmployeeService
 {
     private readonly IUnitOfWork _UnitOfWork;
@@ -23,14 +22,8 @@ public class employeeService:IEmployeeService
         _UnitOfWork = unitOfWork;
         _Mapper = mapper;
     }
-
-
     public async Task<IEnumerable<EmployeeDTO>> GetEmployeesAsync(Pramter pramter)
     {
         return  _Mapper.Map<IEnumerable<EmployeeDTO>>(await _UnitOfWork.GetAllEmployeesAsync().GetAllEmployeesAsync(pramter));
     }
-    //public Task<EmployeeDTO> GetEmployeeAsync(int id)
-    //{
-        
-    //}
 }

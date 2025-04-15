@@ -8,13 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Repositories
 {
+    // This Is A Generic Repository Class That Implements The IGenericRepository Interface
     public class GenericRepository<T , Tkey>:IGenericRepository<T , Tkey> where T : class where Tkey : IEquatable<Tkey>
-    {
-        
-        
+    {            
         public  ApplicationContext _context;
 
         public GenericRepository(ApplicationContext context)
@@ -34,6 +32,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Repositories
             {
                 return await _context.Set<T>().ToListAsync();
             }
+
         }
         public async Task<T?> GetByIdAsync(Tkey id)
         {
@@ -55,6 +54,5 @@ namespace ITI.Shipping.Infrastructure.Presistence.Repositories
                 _context.Set<T>().Remove(entity);
             }
         }
-
     }
 }

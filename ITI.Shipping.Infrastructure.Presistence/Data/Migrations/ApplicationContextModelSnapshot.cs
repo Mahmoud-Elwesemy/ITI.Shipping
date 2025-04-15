@@ -62,7 +62,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         {
                             Id = "01961d25-b4da-7184-a2a8-765486bd4857",
                             ConcurrencyStamp = "EAE00686-2608-4516-AD1B-F96CD87C475E",
-                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(5799),
+                            CreatedAt = new DateTime(2025, 4, 12, 3, 59, 22, 748, DateTimeKind.Local).AddTicks(2227),
                             IsDeleted = false,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -71,7 +71,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         {
                             Id = "01961d25-b4da-75a5-a1f4-a7aa10e421ed",
                             ConcurrencyStamp = "386C6E14-D0FD-40FF-80D0-74B419360EF0",
-                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(8225),
+                            CreatedAt = new DateTime(2025, 4, 12, 3, 59, 22, 748, DateTimeKind.Local).AddTicks(4054),
                             IsDeleted = false,
                             Name = "Courier",
                             NormalizedName = "COURIER"
@@ -80,7 +80,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                         {
                             Id = "01961d25-b4da-71e9-a488-1b8db232e984",
                             ConcurrencyStamp = "1420D50C-F54D-4503-88E8-A2EFA3BD7137",
-                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 366, DateTimeKind.Local).AddTicks(8368),
+                            CreatedAt = new DateTime(2025, 4, 12, 3, 59, 22, 748, DateTimeKind.Local).AddTicks(4162),
                             IsDeleted = false,
                             Name = "Merchant",
                             NormalizedName = "MERCHANT"
@@ -204,19 +204,19 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data.Migrations
                             Id = "0195d439-9ca1-7873-9c14-a4bc1c201593",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "0195d43b-a808-757b-9c3e-bf90c6091133",
-                            CreatedAt = new DateTime(2025, 4, 10, 3, 21, 34, 321, DateTimeKind.Local).AddTicks(2848),
-                            Email = "admin@shipping.com",
+                            CreatedAt = new DateTime(2025, 4, 12, 3, 59, 22, 724, DateTimeKind.Local).AddTicks(4662),
+                            Email = "Weso430@gmail.com",
                             EmailConfirmed = false,
-                            FullName = "Shipping Admin",
+                            FullName = "Weso Admin",
                             IsDeleted = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@SHIPPING.COM",
-                            NormalizedUserName = "ADMIN@SHIPPING.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMsgiOfSDL//UsvbhAiiWNkHa5hgDrVvV6yAMpoA3nipvFi+S3FOB3jbUHc1edKIbw==",
+                            NormalizedEmail = "WESO430@GMAIL.COM",
+                            NormalizedUserName = "WESO430@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE5Z1EcBTN2upkNarqktQnuh9rt8tdGsiDXG/X2qDxJHc6dfNwjFzaaxzOxCWqAEQw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "0195d43be3f271878cc37be7dfc34361",
                             TwoFactorEnabled = false,
-                            UserName = "admin@shipping.com"
+                            UserName = "Weso430@gmail.com"
                         });
                 });
 

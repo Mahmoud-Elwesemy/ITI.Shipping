@@ -31,6 +31,8 @@ public class UsersService(
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly ApplicationContext _context = context;
 
+
+    // Add Courier
     public async Task<string> AddCourierAsync(AddCourierDTO addCourierDTO,CancellationToken cancellationToken = default)
     {
         if(await _userManager.Users.AnyAsync(u => u.Email == addCourierDTO.Email))
@@ -48,7 +50,7 @@ public class UsersService(
         await _unitOfWork.GetSpecialCourierRegionRepository().AddRangeAsync(specialCourierRegion);
         return string.Empty;
     }
-
+    // Add Employee
     public async Task<string> AddEmployeeAsync(AddEmployeeDTO addEmployeeDTO,CancellationToken cancellationToken = default)
     {
         if(await _userManager.Users.AnyAsync(u => u.Email == addEmployeeDTO.Email))
@@ -60,7 +62,7 @@ public class UsersService(
         await _userManager.AddToRoleAsync(user,addEmployeeDTO.RoleName);
         return string.Empty;
     }
-
+    // Add Merchant
     public async Task<string> AddMerchantAsync(AddMerchantDTO addMerchantDTO,CancellationToken cancellationToken = default)
     {
         if(await _userManager.Users.AnyAsync(u => u.Email == addMerchantDTO.Email))
@@ -81,12 +83,13 @@ public class UsersService(
         }
         return string.Empty;
     }
+    // Get Account Profile
     public async Task<AccountProfileDTO?> GetAccountProfileAsync(string userId,CancellationToken cancellationToken = default)
     {
         var accountDetails = await _userManager.Users.FirstAsync(u => u.Id == userId);
         return _mapper.Map<AccountProfileDTO>(accountDetails);
     }
-
+    // JTW Token
     public async Task<LoginResponseDTO?> GetTokenAsync(LoginDTO loginDTO,CancellationToken cancellationToken = default)
     {
         if(await _userManager.FindByEmailAsync(loginDTO.Email) is not { } user)

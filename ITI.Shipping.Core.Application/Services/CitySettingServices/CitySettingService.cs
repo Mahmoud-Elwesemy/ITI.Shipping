@@ -24,19 +24,23 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
             _UnitOfWork = UnitOfWork;
             _Mapper = mapper;
         }
+        // Get all cities 
         public async Task<IEnumerable<CitySettingDTO>> GetCitySettingsAsync(Pramter pramter)
         {
             return _Mapper.Map<IEnumerable<CitySettingDTO>>(await _UnitOfWork.GetCityRepository().GetAllAsync(pramter));
         }
+        // Get city by id
         public async Task<CitySettingDTO> GetCitySettingAsync(int id)
         {
             return _Mapper.Map<CitySettingDTO>(await _UnitOfWork.GetCityRepository().GetByIdAsync(id));
         }
+        // Add city
         public async Task AddAsync(CitySettingToAddDTO DTO)
         {
             await _UnitOfWork.GetCityRepository().AddAsync(_Mapper.Map<CitySetting>(DTO));
             await _UnitOfWork.CompleteAsync();
         }
+        // Update city
         public async Task UpdateAsync(CitySettingToUpdateDTO DTO)
         {
             var CitySettingRepo=_UnitOfWork.GetCityRepository();
@@ -49,6 +53,7 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
             CitySettingRepo.UpdateAsync(existingCitySetting);
             await _UnitOfWork.CompleteAsync();
         }
+        // Delete city
         public async Task DeleteAsync(int id)
         {
             var CitySettingRepo = _UnitOfWork.GetCityRepository ();
@@ -60,7 +65,7 @@ namespace ITI.Shipping.Core.Application.Services.CitySettingServices
             await CitySettingRepo.DeleteAsync(id);
             await _UnitOfWork.CompleteAsync();
         }
-
+        // Get city by governorate name
         public async Task<IEnumerable<CitySettingDTO>> GetCityByGovernorateName(int regionId)
         {
             var cities = await _UnitOfWork.GetCityRepository().GetCityByGovernorateName(regionId);

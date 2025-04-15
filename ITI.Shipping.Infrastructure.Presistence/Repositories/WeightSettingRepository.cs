@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Repositories;
+// This Is WeightSetting Repository Class That Implements The IWeightSettingRepository Interface
 public class WeightSettingRepository:GenericRepository<WeightSetting,int>, IWeightSettingRepository
 {
     public WeightSettingRepository(ApplicationContext _context) :base(_context)

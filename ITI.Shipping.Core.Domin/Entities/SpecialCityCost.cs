@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Domin.Entities
 {
    public class SpecialCityCost
@@ -13,7 +12,7 @@ namespace ITI.Shipping.Core.Domin.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public decimal Price { get; set; }
         public bool IsDeleted { get; set; } = false;
-        //----------- Obj From CitySetting and ForeignKey CitySettingId ---------------------------------
+        //----------- Obj From CitySetting and ForeignKey CitySettingId ------------------------
         [ForeignKey(nameof(CitySetting))]
         public int CitySettingId { get; set; }
         public virtual CitySetting? CitySetting { get; set; }

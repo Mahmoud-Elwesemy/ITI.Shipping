@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Repositories;
+// This Is A SpecialCourierRegion Repository Class That Implements The ISpecialCourierRegionRepository Interface
 public class SpecialCourierRegionRepository:GenericRepository<SpecialCourierRegion,int>, ISpecialCourierRegionRepository
 {
     private readonly ApplicationContext _applicationContext;

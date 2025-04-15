@@ -1,9 +1,7 @@
 ﻿using ITI.Shipping.Core.Domin.ResponseHelper;
 using System.Net;
 using System.Text.Json;
-
 namespace ITI.Shipping.APIs.Middelware;
-
 public class ExceptionMiddelware
 {
     private readonly RequestDelegate _next;
@@ -31,4 +29,3 @@ public class ExceptionMiddelware
         return context.Response.WriteAsync(jsonresponse);
     }
 }
-
