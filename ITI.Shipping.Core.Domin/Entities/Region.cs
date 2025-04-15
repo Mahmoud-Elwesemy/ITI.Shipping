@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Domin.Entities
 {
     public class Region
@@ -24,6 +23,5 @@ namespace ITI.Shipping.Core.Domin.Entities
         public virtual ICollection<Order> Orders { get; set; } = [];
         //------------- ICollection From SpecialCourierRegion ------------------------------
         public virtual ICollection<SpecialCourierRegion> SpecialCourierRegion { get; set; } = [];
-
     }
 }

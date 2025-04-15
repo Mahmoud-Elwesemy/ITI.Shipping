@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Data
 {
     public class ApplicationContext(DbContextOptions<ApplicationContext> options):IdentityDbContext<ApplicationUser , ApplicationRole , string>(options)
@@ -83,7 +82,7 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data
              .HasData(new ApplicationUser
              {
                  Id = DefaultUser.AdminId,
-                 FullName = "Shipping Admin",
+                 FullName = "Weso Admin",
                  UserName = DefaultUser.AdminEmail,
                  NormalizedUserName = DefaultUser.AdminEmail.ToUpper(),
                  Email = DefaultUser.AdminEmail,
@@ -182,5 +181,3 @@ namespace ITI.Shipping.Infrastructure.Presistence.Data
         }
     }
 }
-
-

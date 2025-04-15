@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Domin.Entities
 {
     public class ApplicationRole:IdentityRole
@@ -15,6 +14,5 @@ namespace ITI.Shipping.Core.Domin.Entities
         }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
-
     }
 }

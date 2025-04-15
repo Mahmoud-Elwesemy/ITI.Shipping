@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Repositories;
+// This Is A SpecialCityCost Repository Class That Implements The ISpecialCityCostRepository Interface
 public class SpecialCityCostRepository:GenericRepository<SpecialCityCost,int>, ISpecialCityCostRepository
 {
     private readonly ApplicationContext _applicationContext;

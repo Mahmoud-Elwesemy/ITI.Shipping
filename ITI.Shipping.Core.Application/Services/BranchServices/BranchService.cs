@@ -17,27 +17,28 @@ namespace ITI.Shipping.Core.Application.Services.BranchServices
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _Mapper;
-
         public BranchService(IUnitOfWork UnitOfWork , IMapper mapper)
         {
             _UnitOfWork = UnitOfWork;
             _Mapper = mapper;
         }
+        // Get All Branches
         public async Task<IEnumerable<BranchDTO>> GetBranchesAsync(Pramter pramter)
         {
             return _Mapper.Map<IEnumerable<BranchDTO>>(await _UnitOfWork.GetRepository<Branch,int>().GetAllAsync(pramter));
         }
+        // Get Branch By ID
         public async Task<BranchDTO> GetBranchAsync(int id)
         {
             return _Mapper.Map<BranchDTO>(await _UnitOfWork.GetRepository<Branch,int>().GetByIdAsync(id));
         }
-
+        // Add Branch
         public async Task AddAsync(BranchToAddDTO DTO)
         {
             await _UnitOfWork.GetRepository<Branch,int>().AddAsync(_Mapper.Map<Branch>(DTO));
             await _UnitOfWork.CompleteAsync();
         }
-
+        // Update Branch
         public async Task UpdateAsync(BranchToUpdateDTO DTO)
         {
             var branchRepo = _UnitOfWork.GetRepository<Branch,int>();
@@ -46,13 +47,13 @@ namespace ITI.Shipping.Core.Application.Services.BranchServices
             if(existingBranch == null)
                 throw new KeyNotFoundException($"Branch with ID {DTO.Id} not found.");
 
-            _Mapper.Map(DTO,existingBranch); // Update existing entity with DTO data
+            _Mapper.Map(DTO,existingBranch); 
 
             branchRepo.UpdateAsync(existingBranch);
             await _UnitOfWork.CompleteAsync();
         }
-
-        public async Task DeleteAsync(int id) // Accepts only ID
+        // Delete Branch
+        public async Task DeleteAsync(int id) 
         {
             var branchRepo = _UnitOfWork.GetRepository<Branch,int>();
 
@@ -60,7 +61,7 @@ namespace ITI.Shipping.Core.Application.Services.BranchServices
             if(existingBranch == null)
                 throw new KeyNotFoundException($"Branch with ID {id} not found.");
 
-            await branchRepo.DeleteAsync(id); // Call the repository's delete method
+            await branchRepo.DeleteAsync(id); 
             await _UnitOfWork.CompleteAsync();
         }
     }

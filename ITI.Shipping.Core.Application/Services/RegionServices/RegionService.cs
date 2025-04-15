@@ -23,21 +23,23 @@ namespace ITI.Shipping.Core.Application.Services.RegionServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        // Get All Regions
         public async Task<IEnumerable<RegionDto>> GetRegionsAsync(Pramter pramter)
         {
            return  _mapper.Map<IEnumerable<RegionDto>>(await _unitOfWork.GetRepository<Region,int>().GetAllAsync(pramter));
         }
+        // Get Region By Id
         public async Task<RegionDto> GetRegionAsync(int id)
         {
             return _mapper.Map<RegionDto>(await _unitOfWork.GetRepository<Region,int>().GetByIdAsync(id));
         }
-
+        // Add Region
         public Task AddAsync(RegionDto DTO)
         {
             _unitOfWork.GetRepository<Region,int>().AddAsync(_mapper.Map<Region>(DTO));
             return _unitOfWork.CompleteAsync();
         }
-
+        // Update Region
         public async Task UpdateAsync(RegionDto DTO)
         {
             var regionRepo = _unitOfWork.GetRepository<Region,int>();
@@ -49,6 +51,7 @@ namespace ITI.Shipping.Core.Application.Services.RegionServices
              regionRepo.UpdateAsync( existingregion);
              await _unitOfWork.CompleteAsync();
         }
+        // Delete Region
         public async Task DeleteAsync(int id)
         {
             var regionRepo = _unitOfWork.GetRepository<Region,int>();
@@ -58,7 +61,5 @@ namespace ITI.Shipping.Core.Application.Services.RegionServices
             await regionRepo.DeleteAsync(id);
             await _unitOfWork.CompleteAsync();
         }
-
-
     }
 }

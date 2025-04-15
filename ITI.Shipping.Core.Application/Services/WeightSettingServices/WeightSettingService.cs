@@ -23,19 +23,23 @@ namespace ITI.Shipping.Core.Application.Services.WeightSettingServices
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        // Get All WeightSetting
         public async Task<IEnumerable<WeightSettingDTO>> GetAllWeightSettingAsync(Pramter pramter)
         {
             return _mapper.Map<IEnumerable<WeightSettingDTO>>(await _unitOfWork.GetRepository<WeightSetting,int>().GetAllAsync(pramter));
         }
+        // Get WeightSetting By Id
         public async Task<WeightSettingDTO> GetWeightSettingAsync(int id)
         {
             return _mapper.Map<WeightSettingDTO>(await _unitOfWork.GetRepository<WeightSetting,int>().GetByIdAsync(id));
         }
+        // Add WeightSetting
         public async Task AddAsync(WeightSettingDTO DTO)
         {
             await _unitOfWork.GetRepository<WeightSetting,int>().AddAsync(_mapper.Map<WeightSetting>(DTO));
             await _unitOfWork.CompleteAsync();
         }
+        // Update WeightSetting
         public async Task UpdateAsync(WeightSettingDTO DTO)
         {
             var WeightSettingRepo = _unitOfWork.GetRepository<WeightSetting,int>();
@@ -46,6 +50,7 @@ namespace ITI.Shipping.Core.Application.Services.WeightSettingServices
             WeightSettingRepo.UpdateAsync(existingWeightSetting);
             await _unitOfWork.CompleteAsync();
         }
+        // Delete WeightSetting
         public async Task DeleteAsync(int id)
         {
 

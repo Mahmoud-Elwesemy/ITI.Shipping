@@ -40,9 +40,9 @@ public class AuthController(IUserService userService):ControllerBase
             return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,response));
         return Created();
     }
-    [HttpPost("addCourier")]
+    [HttpPost("AddCourier")]
     [HasPermission(Permissions.AddCouriers)]
-    public async Task<IActionResult> AddCourier(AddCourierDTO addCourierRequest,CancellationToken cancellationToken)
+    public async Task<IActionResult> AddCourier([FromBody] AddCourierDTO addCourierRequest,CancellationToken cancellationToken)
     {
         var response = await _userService.AddCourierAsync(addCourierRequest,cancellationToken);
         if(!string.IsNullOrEmpty(response))

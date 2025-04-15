@@ -19,13 +19,24 @@ public class OrderReportController:ControllerBase
     {
         _serviceManager = serviceManager;
     }
-    [HttpGet] // Get : /api/OrderReport
+    //[HttpGet] // Get : /api/OrderReport
+    //[HasPermission(Permissions.ViewOrderReports)]
+    //public async Task<ActionResult<IEnumerable<OrderReportToShowDTO>>> GetAllOrderReport([FromQuery] Pramter pramter)
+    //{
+    //    var AllOrderReport = await _serviceManager.orderReportService.GetAllOrderReportAsync(pramter);
+    //    return Ok(AllOrderReport);
+    //}
+
+    [HttpGet("GetAllByPramter")] // Get : /api/OrderReport/GetAllByPramter
     [HasPermission(Permissions.ViewOrderReports)]
-    public async Task<ActionResult<IEnumerable<OrderReportDTO>>> GeTAllOrderReport([FromQuery] Pramter pramter)
+    public async Task<ActionResult<IEnumerable<OrderReportToShowDTO>>> GetAllByPramter([FromQuery] OrderReportPramter pramter)
     {
         var AllOrderReport = await _serviceManager.orderReportService.GetAllOrderReportAsync(pramter);
         return Ok(AllOrderReport);
     }
+
+
+
     [HttpGet("{id}")] // Get : /api/OrderReport/id
     [HasPermission(Permissions.ViewOrderReports)]
     public async Task<ActionResult<OrderReportDTO>> GetOrderReport(int id)
@@ -37,15 +48,15 @@ public class OrderReportController:ControllerBase
         }
         return Ok(OrderReport);
     }
-    [HttpPost] // Post : /api/OrderReport
-    [HasPermission(Permissions.AddOrderReports)]
-    public async Task<ActionResult<OrderReportDTO>> AddOrderReport(OrderReportDTO DTO)
-    {
-        if(DTO == null)
-            return BadRequest("Invalid OrderReport data");
-        await _serviceManager.orderReportService.AddAsync(DTO);
-        return Ok();
-    }
+    //[HttpPost] // Post : /api/OrderReport
+    //[HasPermission(Permissions.AddOrderReports)]
+    //public async Task<ActionResult<OrderReportDTO>> AddOrderReport(OrderReportDTO DTO)
+    //{
+    //    if(DTO == null)
+    //        return BadRequest("Invalid OrderReport data");
+    //    await _serviceManager.orderReportService.AddAsync(DTO);
+    //    return Ok();
+    //}
     [HttpPut("{id}")] // Put : /api/OrderReport/id
     [HasPermission(Permissions.UpdateOrderReports)]
     public async Task<ActionResult> UpdateOrderReport(int id,[FromBody] OrderReportDTO DTO)

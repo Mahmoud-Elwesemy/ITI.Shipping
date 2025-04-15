@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction.OrderReport
 {
     public interface IOrderReportService
     {
-        Task<IEnumerable<OrderReportDTO>> GetAllOrderReportAsync(Pramter pramter);
+        //Task<IEnumerable<OrderReportToShowDTO>> GetAllOrderReportAsync(Pramter pramter);
+        Task<IEnumerable<OrderReportToShowDTO>> GetAllOrderReportAsync(OrderReportPramter pramter);
         Task<OrderReportDTO> GetOrderReportAsync(int id);
         Task AddAsync(OrderReportDTO DTO);
         Task UpdateAsync(OrderReportDTO DTO);

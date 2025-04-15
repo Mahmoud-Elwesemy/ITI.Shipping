@@ -16,6 +16,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
 {
     private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
     private readonly ApplicationContext _context = context;
+    // Get all Roles (Group)
     public async Task<IEnumerable<RoleResponseDTO>> GetAllRolesAsync(CancellationToken cancellationToken)
     {
         return await _roleManager.Roles
@@ -26,6 +27,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
                     r.CreatedAt.ToShortDateString()
             )).ToListAsync(cancellationToken);
     }
+    // Get Role (Group) By Id
     public async Task<RoleDetailsResponseDTO?> GetRoleByIdAsync(string roleId,CancellationToken cancellationToken = default)
     {
         if(await _roleManager.FindByIdAsync(roleId) is not { } role)
@@ -38,7 +40,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
             permissions.Select(p => p.Value)
         );
     }
-
+    // Create Role (Group)
     public async Task<string> CreateRoleAsync(CreateRoleRequestDTO createRoleRequestDTO,CancellationToken cancellationToken = default)
     {
         var roleIsExists = await _roleManager.RoleExistsAsync(createRoleRequestDTO.RoleName);
@@ -65,7 +67,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
         await _context.SaveChangesAsync(cancellationToken);
         return "Role Created Successfully";
     }
-
+    // Update Role (Group)
     public async Task<string> UpdateRoleAsync(string roleId,CreateRoleRequestDTO createRoleRequestDTO,CancellationToken cancellationToken = default)
     {
         var roleIsExists = await _roleManager.Roles.AnyAsync(r => r.Name == createRoleRequestDTO.RoleName && r.Id != roleId);
@@ -98,7 +100,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
         await _context.SaveChangesAsync(cancellationToken);
         return "Role Updated Successfully";
     }
-
+    // Delete Role (Group)
     public async Task<string> DeleteRoleAsync(string roleId,CancellationToken cancellationToken = default)
     {
         if(await _roleManager.FindByIdAsync(roleId) is not { } role)

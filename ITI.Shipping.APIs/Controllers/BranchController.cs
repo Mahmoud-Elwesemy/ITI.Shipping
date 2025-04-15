@@ -20,7 +20,7 @@ namespace ITI.Shipping.APIs.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpGet] // Get : /api/Branch
+        [HttpGet()] // Get : /api/Branch
         [HasPermission (Permissions.ViewBranches)]
         public async Task<ActionResult<IEnumerable<BranchDTO>>> GetBranches([FromQuery] Pramter pramter)
         {

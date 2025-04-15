@@ -18,13 +18,13 @@ namespace ITI.Shipping.Core.Application.Services.CourierReportServices
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _Mapper;
-
         public CourierReportService(IUnitOfWork UnitOfWork,IMapper mapper)
         {
             _UnitOfWork = UnitOfWork;
             _Mapper = mapper;
         }
-        public  async Task<IEnumerable<GetAllCourierOrderCountDto>> GetAllCourierReportsAsync(Pramter pramter)
+        // Get All Courier Reports
+        public async Task<IEnumerable<GetAllCourierOrderCountDto>> GetAllCourierReportsAsync(Pramter pramter)
         {
             var courierReports = await _UnitOfWork.GetRepository<CourierReport,int>().GetAllAsync(pramter);
             if(courierReports == null)
@@ -38,17 +38,9 @@ namespace ITI.Shipping.Core.Application.Services.CourierReportServices
                 CourierName = reportsDto.Select(C => C.CourierName).FirstOrDefault(),
                 OrdersCount = courierReports.Select(O => O.OrderId).Count()
             });
-            //var getAllCourierOrderCountDto = new List<GetAllCourierOrderCountDto>
-            //  {
-            //      new GetAllCourierOrderCountDto
-            //      {
-            //          CourierName = reportsDto.Select(c => c.CourierName).FirstOrDefault(),
-            //          OrdersCount = reportsDto.Select(o => o.OrderId).Count()
-            //      }
-            //  };
-            return getAllCourierOrderCountDto;
-            //return _Mapper.Map<IEnumerable<CourierReportDto>>(await _UnitOfWork.GetRepository<CourierReport,int>().GetAllAsync());
+            return getAllCourierOrderCountDto;           
         }
+        // Get Courier Report By Id
         public async Task<CourierReportDto> GetCourierReportByIdAsync(int id,Pramter pramter)
         {
             var CourierReport = await _UnitOfWork.GetRepository<CourierReport,int>().GetByIdAsync(id);

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction.Branch
 {
     public interface IBranchService
@@ -15,6 +14,5 @@ namespace ITI.Shipping.Core.Application.Abstraction.Branch
         Task AddAsync(BranchToAddDTO DTO);
         Task UpdateAsync(BranchToUpdateDTO DTO);
         Task DeleteAsync(int id);
-
     }
 }
