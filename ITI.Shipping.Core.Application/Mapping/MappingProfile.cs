@@ -112,6 +112,7 @@ namespace ITI.Shipping.Core.Application.Mapping
                 dest.MerchantName = src.MerchantId;
                 dest.Status = src.Status.ToString();
                 dest.CustomerInfo = $"{src.CustomerName} {src.CustomerPhone1}";
+                dest.orderCost = (src.OrderCost+src.ShippingCost);
 
             }).ReverseMap();
 

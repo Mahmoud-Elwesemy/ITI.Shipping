@@ -25,7 +25,7 @@ namespace ITI.Shipping.Core.Application.Abstraction.Order.Model
         public string? Region { get; set; }
         public string? City { get; set; }
 
-
+        public decimal orderCost { get; set; }
         public string CustomerInfo { get; set; } = string.Empty;
         public virtual string MerchantName { get; set; } = string.Empty;
         public bool IsDeleted { get; set; } = false;
