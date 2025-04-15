@@ -77,5 +77,10 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
             // Check If The Repository Already Exists In The Dictionary Or Not
             return (IOrderReportRepository) _repositories.GetOrAdd(typeof(OrderReport).Name,new OrderReportRepository(_context));
         }
+        // This Method Is Used To Get The Merchant Repository
+        public IMerchantRepository GetAllMerchantAsync()
+        {
+            return (IMerchantRepository) _repositories.GetOrAdd(typeof(ApplicationUser).Name,new MerchantRepository(_context,_userManager));
+        }
     }
 }

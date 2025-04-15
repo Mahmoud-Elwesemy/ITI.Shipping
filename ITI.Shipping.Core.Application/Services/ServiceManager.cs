@@ -6,6 +6,7 @@ using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
 using ITI.Shipping.Core.Application.Abstraction.Dashboard;
 using ITI.Shipping.Core.Application.Abstraction.Employee;
+using ITI.Shipping.Core.Application.Abstraction.Merchant;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
 using ITI.Shipping.Core.Application.Abstraction.Product;
@@ -20,6 +21,7 @@ using ITI.Shipping.Core.Application.Services.CourierReportServices;
 using ITI.Shipping.Core.Application.Services.CourierServices;
 using ITI.Shipping.Core.Application.Services.DashboardServices;
 using ITI.Shipping.Core.Application.Services.EmployeeService;
+using ITI.Shipping.Core.Application.Services.MerchantServices;
 using ITI.Shipping.Core.Application.Services.OrderReportServices;
 using ITI.Shipping.Core.Application.Services.OrderServices;
 using ITI.Shipping.Core.Application.Services.ProductServices;
@@ -61,6 +63,7 @@ namespace ITI.Shipping.Core.Application.Services
         private readonly Lazy<ICourierService> _CourierService;
         private readonly Lazy<IEmployeeService> _employeeService;
         private readonly Lazy<IDashboardService> _dashboardService;
+        private readonly Lazy<IMerchantService> _merchantService;
 
         public ServiceManager(IUnitOfWork unitOfWork , IMapper mapper , UserManager<ApplicationUser> userManager,IHttpContextAccessor httpContextAccessor,ApplicationContext Context)
         {
@@ -80,6 +83,7 @@ namespace ITI.Shipping.Core.Application.Services
             _CourierService = new Lazy<ICourierService>(() => new CourierService(unitOfWork,mapper,userManager));
             _employeeService = new Lazy<IEmployeeService>(() => new employeeService(unitOfWork,mapper));
             _dashboardService = new Lazy<IDashboardService>(() => new DashboardService(Context));
+            _merchantService = new Lazy<IMerchantService>(() => new MerchantService(unitOfWork,mapper));
         }
         // Properties to access the services
         public IBranchService BranchService => _branchService.Value;
@@ -95,7 +99,7 @@ namespace ITI.Shipping.Core.Application.Services
         public IOrderReportService orderReportService => _orderReportService.Value;
         public ICourierService courierService => _CourierService.Value;
         public IEmployeeService employeeService => _employeeService.Value;
-
         public IDashboardService dashboardService => _dashboardService.Value;
+        public IMerchantService merchantService => _merchantService.Value;
     }
 }

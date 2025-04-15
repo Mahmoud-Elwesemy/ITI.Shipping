@@ -4,6 +4,7 @@ using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
 using ITI.Shipping.Core.Application.Abstraction.Courier.DTO;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Employee.Model;
+using ITI.Shipping.Core.Application.Abstraction.Merchant.Model;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Product.Model;
@@ -158,7 +159,7 @@ namespace ITI.Shipping.Core.Application.Mapping
 
             CreateMap<ApplicationUser,EmployeeDTO>()
                 .ForMember(dest => dest.BranchName,opt => opt.MapFrom(src => src.Branch!.Name))
-                .ForMember(des => des.Email , opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Email , opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.FullName,opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dest => dest.PhoneNumber,opt => opt.MapFrom(src => src.PhoneNumber))
                 .ReverseMap();
@@ -179,6 +180,13 @@ namespace ITI.Shipping.Core.Application.Mapping
             CreateMap<SpecialCityCostDT0,SpecialCityCost>().ReverseMap();
             CreateMap<CourierRegionDT0,SpecialCourierRegion>().ReverseMap();
             CreateMap<SpecialCourierRegionDTO,SpecialCourierRegion>().ReverseMap(); 
+            CreateMap<ApplicationUser , MerchantDTO>()
+                .ForMember(dest => dest.Name , opt => opt.MapFrom(src => src.FullName))
+                .ForMember(dest => dest.Email,opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Id,opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Phone,opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.Address,opt => opt.MapFrom(src => src.Address))
+                .ReverseMap();
             #endregion
         }
     }
