@@ -65,17 +65,5 @@ namespace ITI.Shipping.Infrastructure.Presistence.UnitOfWork
             // Check If The Repository Already Exists In The Dictionary Or Not
             return (IWeightSettingRepository) _repositories.GetOrAdd(typeof(WeightSetting).Name,new WeightSettingRepository(_context));
         }
-        // This Method Is Used To Get The Employee Repository
-        public IEmployeeRepository GetAllEmployeesAsync()
-        {
-            // Check If The Repository Already Exists In The Dictionary Or Not
-            return (IEmployeeRepository) _repositories.GetOrAdd(typeof(ApplicationUser).Name,new EmployeeRepository(_context,_userManager));
-        }
-        // This Method Is Used To Get The Order Report Repository
-        public IOrderReportRepository GetOrderReportRepository()
-        {
-            // Check If The Repository Already Exists In The Dictionary Or Not
-            return (IOrderReportRepository) _repositories.GetOrAdd(typeof(OrderReport).Name,new OrderReportRepository(_context));
-        }
     }
 }

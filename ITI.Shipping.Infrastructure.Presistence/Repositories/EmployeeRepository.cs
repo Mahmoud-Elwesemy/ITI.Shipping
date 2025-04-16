@@ -22,16 +22,24 @@ public class EmployeeRepository:GenericRepository<ApplicationUser,string>, IEmpl
     // This Method Is Used To Get All Employees With pramter (Pagination)
     public async Task<IEnumerable<ApplicationUser>> GetAllEmployeesAsync(Pramter pramter)
     {
+        var merchantIds = (await _userManager.GetUsersInRoleAsync(DefaultRole.Merchant)).Select(u => u.Id);
+        var courierIds = (await _userManager.GetUsersInRoleAsync(DefaultRole.Courier)).Select(u => u.Id);
+        var adminIds = (await _userManager.GetUsersInRoleAsync(DefaultRole.Admin)).Select(u => u.Id);
+        var excludedIds = merchantIds
+       .Concat(courierIds)
+       .Concat(adminIds)
+       .ToHashSet();
+        var allEmployees = _context.Users
+       .Where(u => !excludedIds.Contains(u.Id));
+        
         if(pramter.PageSize != null && pramter.PageNumber != null)
         {
-            var allUsers = await _userManager.GetUsersInRoleAsync(DefaultRole.Merchant);
-            return allUsers
                 .Skip((pramter.PageNumber.Value - 1) * pramter.PageSize.Value)
                 .Take(pramter.PageSize.Value);
         }
         else
         {
-            return await _userManager.GetUsersInRoleAsync(DefaultRole.Merchant);
         }
     }
+
 }

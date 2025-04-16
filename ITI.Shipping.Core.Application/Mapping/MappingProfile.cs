@@ -3,7 +3,6 @@ using ITI.Shipping.Core.Application.Abstraction.Branch.Models;
 using ITI.Shipping.Core.Application.Abstraction.CitySetting.Models;
 using ITI.Shipping.Core.Application.Abstraction.Courier.DTO;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport.Model;
-using ITI.Shipping.Core.Application.Abstraction.Employee.Model;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
 using ITI.Shipping.Core.Application.Abstraction.Product.Model;
@@ -35,7 +34,7 @@ namespace ITI.Shipping.Core.Application.Mapping
              .ForMember(dest => dest.RegionName,opt => opt.MapFrom(src => src.Region != null ? src.Region.Governorate : null))
              .ForMember(dest => dest.UsersName,opt => opt.MapFrom(src => src.Users.Select(u => u.FullName).ToList()))
              .ForMember(dest => dest.OrdersCost,opt => opt.MapFrom(src => src.Orders.Select(u => u.OrderCost).ToList()))
-             .ForMember(dest => dest.UsersThatHasSpecialCityCost,opt => opt.MapFrom(src => src.SpecialPickups.Select(u => u.Merchant.FullName).ToList()))
+             .ForMember(dest => dest.UsersThatHasSpecialCityCost,opt => opt.MapFrom(src => src.SpecialPickups.Select(u => u.Merchant!.FullName).ToList()))
              .ReverseMap();
             CreateMap<CitySettingToAddDTO,CitySetting>().ReverseMap();
             CreateMap<CitySettingToUpdateDTO,CitySetting>().ReverseMap();
@@ -134,29 +133,14 @@ namespace ITI.Shipping.Core.Application.Mapping
             CreateMap<OrderReport,OrderReportDTO>()
             .ForMember(dest => dest.OrderId,op => op.MapFrom(src => src.OrderId))
             .ReverseMap();
-            CreateMap<OrderReport,OrderReportToShowDTO>()
-                .ForMember(dest => dest.Id,op => op.MapFrom(src => src.OrderId))
-                .ForMember(dest => dest.ReportDate,op => op.MapFrom(src =>  src.ReportDate ))
-                .ForMember(dest => dest.IsDeleted,op => op.MapFrom(src => src.Order != null ? src.Order.IsDeleted : false))
-                .ForMember(dest => dest.MerchantId,op => op.MapFrom(src => src.Order != null ? src.Order.MerchantId : string.Empty))
-                .ForMember(dest => dest.CourierId,op => op.MapFrom(src => src.Order != null ? src.Order.CourierId : string.Empty))
-                .ForMember(dest => dest.CustomerName,op => op.MapFrom(src => src.Order != null ? src.Order.CustomerName : string.Empty))
-                .ForMember(dest => dest.CustomerPhone1,op => op.MapFrom(src => src.Order != null ? src.Order.CustomerPhone1 : string.Empty))
-                .ForMember(dest => dest.RegionName,op => op.MapFrom(src => src.Order != null && src.Order.Region != null ? src.Order.Region.Governorate : string.Empty))
-                .ForMember(dest => dest.BranchName,op => op.MapFrom(src => src.Order != null && src.Order.Branch != null ? src.Order.Branch.Name : string.Empty))
-                .ForMember(dest => dest.OrderCost,op => op.MapFrom(src => src.Order != null ? src.Order.OrderCost : 0))
-                .ForMember(dest => dest.ShippingCost,op => op.MapFrom(src => src.Order != null ? src.Order.ShippingCost : 0))
-                .ForMember(dest => dest.PaymentType,op => op.MapFrom(src => src.Order != null ? src.Order.PaymentType.ToString(): "No Payment"))
-                .ReverseMap();
             #endregion
             #region Configratio Of Application User (Courier , Merchant , Employee)
             CreateMap<ApplicationUser,CourierDTO>()
-         .ForMember(dest => dest.CourierId,opt => opt.MapFrom(src => src.Id))
-         .ForMember(dest => dest.CourierName,opt => opt.MapFrom(src => src.FullName))
-         .ReverseMap();
+                .ForMember(dest => dest.CourierId,opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CourierName,opt => opt.MapFrom(src => src.FullName))
+                .ReverseMap();
+                
 
-            CreateMap<ApplicationUser,EmployeeDTO>()
-                .ForMember(dest => dest.BranchName,opt => opt.MapFrom(src => src.Branch!.Name)).ReverseMap();
 
             CreateMap<AddEmployeeDTO,ApplicationUser>().AfterMap((src,dest) =>
             {
@@ -172,8 +156,7 @@ namespace ITI.Shipping.Core.Application.Mapping
             });
             CreateMap<SpecialCityCostDT0,SpecialCityCost>().ReverseMap();
             CreateMap<CourierRegionDT0,SpecialCourierRegion>().ReverseMap();
-            CreateMap<SpecialCourierRegionDTO,SpecialCourierRegion>().ReverseMap(); 
-            #endregion
+            CreateMap<SpecialCourierRegionDTO,SpecialCourierRegion>().ReverseMap();
         }
     }
 }

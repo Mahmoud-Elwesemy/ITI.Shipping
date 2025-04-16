@@ -13,5 +13,6 @@ namespace ITI.Shipping.Core.Domin.Entities_Helper
         Delivered,
         Cancelled,
         Declined
+
     }
 }
