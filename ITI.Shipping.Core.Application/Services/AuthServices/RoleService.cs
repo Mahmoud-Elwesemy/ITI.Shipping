@@ -1,14 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction.Auth.Model;
-using ITI.Shipping.Core.Application.Abstraction.Auth;
+﻿using ITI.Shipping.Core.Application.Abstraction.Auth;
+using ITI.Shipping.Core.Application.Abstraction.Auth.Model;
 using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ITI.Shipping.Infrastructure.Presistence.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ITI.Shipping.Core.Application.Services.AuthServices;
@@ -65,7 +60,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
         });
         await _context.RoleClaims.AddRangeAsync(permissions,cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return "Role Created Successfully";
+        return "Group Created Successfully";
     }
     // Update Role (Group)
     public async Task<string> UpdateRoleAsync(string roleId,CreateRoleRequestDTO createRoleRequestDTO,CancellationToken cancellationToken = default)
@@ -98,7 +93,7 @@ public class RoleService(RoleManager<ApplicationRole> roleManager,ApplicationCon
             .ExecuteDeleteAsync(cancellationToken);
         await _context.RoleClaims.AddRangeAsync(permissionsToAdd,cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return "Role Updated Successfully";
+        return "Group Updated Successfully";
     }
     // Delete Role (Group)
     public async Task<string> DeleteRoleAsync(string roleId,CancellationToken cancellationToken = default)

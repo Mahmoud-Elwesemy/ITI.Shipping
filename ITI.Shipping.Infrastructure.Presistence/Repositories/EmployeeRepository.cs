@@ -34,13 +34,11 @@ public class EmployeeRepository:GenericRepository<ApplicationUser,string>, IEmpl
         
         if(pramter.PageSize != null && pramter.PageNumber != null)
         {
-            return allEmployees
                 .Skip((pramter.PageNumber.Value - 1) * pramter.PageSize.Value)
                 .Take(pramter.PageSize.Value);
         }
         else
         {
-            return allEmployees;
         }
     }
 

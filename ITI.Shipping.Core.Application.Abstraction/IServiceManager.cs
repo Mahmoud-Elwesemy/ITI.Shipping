@@ -2,9 +2,6 @@
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
 using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
-using ITI.Shipping.Core.Application.Abstraction.Dashboard;
-using ITI.Shipping.Core.Application.Abstraction.Employee;
-using ITI.Shipping.Core.Application.Abstraction.Merchant;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
 using ITI.Shipping.Core.Application.Abstraction.Product;
@@ -35,8 +32,5 @@ namespace ITI.Shipping.Core.Application.Abstraction
         public IProductService productService { get; }
         public IOrderReportService orderReportService { get; }
         public ICourierService courierService { get; }
-        public IEmployeeService employeeService { get; }
-        public IDashboardService dashboardService { get; }
-        public IMerchantService merchantService { get; }
     }
 }

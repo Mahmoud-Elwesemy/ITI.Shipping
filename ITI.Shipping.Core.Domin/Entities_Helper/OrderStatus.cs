@@ -13,11 +13,10 @@ namespace ITI.Shipping.Core.Domin.Entities_Helper
         Delivered = 3,
         DeliveredToCourier = 4,
         Declined = 5,
-        UnreachableCustomer = 6,
+        UnreachableCustomer = 5,
         PartialDelivery = 7,
         CanceledByRecipient = 8,
-        DeclinedWithPartialPayment = 9,
+        DeclinedWithPartialPayment = 8,
         DeclinedWithFullPayment = 10
-
     }
 }
