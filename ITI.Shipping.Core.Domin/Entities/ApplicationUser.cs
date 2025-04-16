@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ITI.Shipping.Core.Domin.Entities_Helper;
-
 namespace ITI.Shipping.Core.Domin.Entities
 {
     public class ApplicationUser:IdentityUser

@@ -2,6 +2,7 @@
 using Castle.Core.Logging;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.Order.Model;
+using ITI.Shipping.Core.Application.Abstraction.OrderReport.Model;
 using ITI.Shipping.Core.Domin.Entities;
 using ITI.Shipping.Core.Domin.Entities_Helper;
 using ITI.Shipping.Core.Domin.Pramter_Helper;
@@ -34,7 +35,8 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
            _httpContextAccessor = httpContextAccessor;
         }
 
-       //---------------------------------------------------------------------------
+        //---------------------------------------------------------------------------
+        // Method to get the merchant name for each order
         private async Task<IEnumerable<OrderWithProductsDto>> GetMerchantName(IEnumerable<Order> orders)
         {
             var ordersDto = _mapper.Map<IEnumerable<OrderWithProductsDto>>(orders);
@@ -45,16 +47,16 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             }
             return ordersDto;
         }
-       //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
 
-
+        // Get all orders
         public async Task<IEnumerable<OrderWithProductsDto>> GetOrdersAsync(Pramter pramter)
         {
             var orders = await _unitOfWork.GetOrderRepository().GetAllAsync(pramter);
             var ordersDto = await GetMerchantName(orders);
             return ordersDto;
         }
-         
+        // Get order by id
         public async Task<OrderWithProductsDto> GetOrderAsync(int id)
         {
             var findOrder = await _unitOfWork.GetOrderRepository().GetByIdAsync(id);
@@ -69,9 +71,10 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             orderDto.MerchantName = MerchantName!.FullName;
             return orderDto;
         }
-
+        // Add new order And Calculate Shipping Cost And Create Order Report
         public async Task AddAsync(addOrderDto DTO)
         {
+
             decimal ShippingCost = 0;
             decimal Ordercost = DTO.OrderCost;
             decimal Totalweight = DTO.TotalWeight;
@@ -83,7 +86,6 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
 
             var Allweightsetting = await _unitOfWork.GetWeightSettingRepository().GetAllWeightSetting();
             var weightsetting = Allweightsetting.FirstOrDefault();
-            //var MinWeight = weightsetting.MinWeight;
             decimal MaxWeight = weightsetting!.MaxWeight;
             decimal CostPerKG = weightsetting!.CostPerKg;
 
@@ -135,15 +137,31 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             if(currentUser != null && await _userManager.IsInRoleAsync(currentUser,DefaultRole.Merchant))
             {
                 DTO.status = OrderStatus.WaitingForConfirmation;
+                DTO.MerchantName = currentUser.Id;
 
             }
             else
             {
                 DTO.status = OrderStatus.Pending;
+                
             }
-            await _unitOfWork.GetOrderRepository().AddAsync(_mapper.Map<Order>(DTO));
+            var orderEntity = _mapper.Map<Order>(DTO);
+            await _unitOfWork.GetOrderRepository().AddAsync(orderEntity);
             await _unitOfWork.CompleteAsync();
+
+            // Retrieve the saved order to get the correct ID
+            var savedOrder = await _unitOfWork.GetOrderRepository().GetByIdAsync(orderEntity.Id);
+
+            // Create the order report When Add New order
+            var orderReportDto = new OrderReportDTO
+            {
+                OrderId = savedOrder.Id, 
+                ReportDate = DateTime.UtcNow
+            };
+            await _unitOfWork.GetOrderReportRepository().AddAsync(_mapper.Map<OrderReport>(orderReportDto));
+            await _unitOfWork.CompleteAsync();    
         }
+        // Update order
         public async Task UpdateAsync(updateOrderDto DTO)
         {
             var OrderRepo = _unitOfWork.GetOrderRepository();
@@ -154,6 +172,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
             OrderRepo.UpdateAsync(existingOrder);
             await _unitOfWork.CompleteAsync();
         }
+        // Delete order
         public async Task DeleteAsync(int id)
         {
             var OrderRepo = _unitOfWork.GetOrderRepository();
@@ -189,8 +208,7 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
         {
             await ChangeOrderStatus(id,OrderStatus.Declined);
         }
-
-        //--------------------------------------------------------------------
+        // Change order status
         private async Task ChangeOrderStatus(int id , OrderStatus orderStatus)
         {
                 var Order = await _unitOfWork.GetOrderRepository().GetByIdAsync(id);
@@ -203,10 +221,10 @@ namespace ITI.Shipping.Core.Application.Services.OrderServices
         {
             var Order = await _unitOfWork.GetOrderRepository().GetByIdAsync(OrderId);
             Order!.CourierId = courierId;
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext!.User);
+            Order!.EmployeeId = currentUser!.Id;
             _unitOfWork.GetOrderRepository().UpdateAsync(Order);
             await _unitOfWork.CompleteAsync();
-        }
-        //-------------------------------------------------------------------
-     
+        }    
     }
 }

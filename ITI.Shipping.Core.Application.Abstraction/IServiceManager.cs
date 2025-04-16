@@ -2,6 +2,7 @@
 using ITI.Shipping.Core.Application.Abstraction.CitySetting;
 using ITI.Shipping.Core.Application.Abstraction.Courier;
 using ITI.Shipping.Core.Application.Abstraction.CourierReport;
+using ITI.Shipping.Core.Application.Abstraction.Employee;
 using ITI.Shipping.Core.Application.Abstraction.Order;
 using ITI.Shipping.Core.Application.Abstraction.OrderReport;
 using ITI.Shipping.Core.Application.Abstraction.Product;
@@ -15,11 +16,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction
 {
     public interface IServiceManager
-    {       
+    {
+        // / Define all the services that the service manager will provide
         public IBranchService BranchService { get; }
         public ICitySettingService CitySettingService { get; }
         public ICourierReportService CourierReportService { get; }
@@ -32,5 +33,6 @@ namespace ITI.Shipping.Core.Application.Abstraction
         public IProductService productService { get; }
         public IOrderReportService orderReportService { get; }
         public ICourierService courierService { get; }
+        public IEmployeeService employeeService { get; }
     }
 }

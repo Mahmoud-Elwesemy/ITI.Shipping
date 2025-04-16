@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Infrastructure.Presistence.Repositories;
+// This Is A Order Repository Class That Implements The IOrderRepository Interface
 public class OrderRepository:GenericRepository<Order,int>, IOrderRepository
 {
     private readonly ApplicationContext _Context;

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace ITI.Shipping.Core.Application.Services.AuthServices;
 public class JWTProvider:IJWTProvider
 {
+    // JWT Provider
     public (string token, int expiresIn) GenerateJwtToken(ApplicationUser user,IEnumerable<string> roles,IEnumerable<string> permissions)
     {
         Claim[] claims = [

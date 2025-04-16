@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
 namespace ITI.Shipping.APIs.Filters;
-
 public class PermissionAuthorizationHandler:AuthorizationHandler<PermissionRequirements>
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,PermissionRequirements requirement)

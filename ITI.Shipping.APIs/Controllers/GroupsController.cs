@@ -1,10 +1,9 @@
-﻿using ITI.Shipping.Core.Application.Abstraction.Auth.Model;
+﻿using ITI.Shipping.APIs.Filters;
 using ITI.Shipping.Core.Application.Abstraction.Auth;
-using ITI.Shipping.Core.Domin.ResponseHelper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ITI.Shipping.APIs.Filters;
+using ITI.Shipping.Core.Application.Abstraction.Auth.Model;
 using ITI.Shipping.Core.Domin.Entities_Helper;
+using ITI.Shipping.Core.Domin.ResponseHelper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ITI.Shipping.APIs.Controllers;
 [Route("api/[controller]")]
@@ -34,26 +33,26 @@ public class GroupsController(IRoleService roleService):ControllerBase
     public async Task<IActionResult> CreateGroup(CreateRoleRequestDTO createRoleRequestDTO,CancellationToken cancellationToken)
     {
         var result = await _roleService.CreateRoleAsync(createRoleRequestDTO,cancellationToken);
-        if(result != "Group created successfully")
-            return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
-        return Ok(new ResponseAPI(StatusCodes.Status201Created,result));
+        if(result.Equals("Group Created Successfully"))
+            return Ok(new ResponseAPI(StatusCodes.Status201Created,result));
+        return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
     }
     [HttpPut("{id}")]
     [HasPermission(Permissions.UpdatePermissions)]
     public async Task<IActionResult> UpdateGroup(string id,CreateRoleRequestDTO createRoleRequestDTO,CancellationToken cancellationToken)
     {
         var result = await _roleService.UpdateRoleAsync(id,createRoleRequestDTO,cancellationToken);
-        if(result != "Group updated successfully")
-            return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
-        return Ok(new ResponseAPI(StatusCodes.Status200OK,result));
+        if(result.Equals("Group Updated Successfully"))
+            return Ok(new ResponseAPI(StatusCodes.Status200OK,result));
+        return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
     }
     [HttpDelete("{id}")]
     [HasPermission(Permissions.DeletePermissions)]
     public async Task<IActionResult> DeleteGroup(string id,CancellationToken cancellationToken)
     {
         var result = await _roleService.DeleteRoleAsync(id,cancellationToken);
-        if(result != "Group deleted successfully")
-            return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
-        return Ok(new ResponseAPI(StatusCodes.Status204NoContent,result));
+        if(result.Equals("Role Deleted Successfully"))
+            return Ok(new ResponseAPI(StatusCodes.Status204NoContent,result));
+        return BadRequest(new ResponseAPI(StatusCodes.Status400BadRequest,result));
     }
 }

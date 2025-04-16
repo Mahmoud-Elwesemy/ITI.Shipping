@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ITI.Shipping.Core.Application.Abstraction.CitySetting.Models
 {
     public class CitySettingDTO
@@ -22,7 +21,5 @@ namespace ITI.Shipping.Core.Application.Abstraction.CitySetting.Models
         public List<decimal> OrdersCost { get; set; } = [];
         //------------- List From SpecialPickup ------------------------------
         public List<string> UsersThatHasSpecialCityCost { get; set; } = [];
-
-
     }
 }

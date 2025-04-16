@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 
 namespace ITI.Shipping.APIs.Filters;
-
 public class PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options):DefaultAuthorizationPolicyProvider(options)
 {
     private readonly AuthorizationOptions _options = options.Value;

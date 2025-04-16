@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ITI.Shipping.Core.Domin.Entities_Helper;
-
 namespace ITI.Shipping.Core.Domin.Entities
 {
     public class Order

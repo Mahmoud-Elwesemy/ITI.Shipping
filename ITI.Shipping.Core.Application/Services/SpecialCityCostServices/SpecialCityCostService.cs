@@ -24,14 +24,17 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCityCostServices
            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        // Get All SpecialCityCost
         public async Task<IEnumerable<SpecialCityCostDTO>> GetAllSpecialCityCostAsync(Pramter pramter)
         {
             return _mapper.Map<IEnumerable<SpecialCityCostDTO>>(await _unitOfWork.GetRepository<SpecialCityCost,int>().GetAllAsync(pramter));
         }
+        // Get SpecialCityCost By Id
         public async Task<SpecialCityCostDTO> GetSpecialCityCostAsync(int id)
         {
             return _mapper.Map<SpecialCityCostDTO>(await _unitOfWork.GetRepository<SpecialCityCost,int>().GetByIdAsync(id));
         }
+        // Add SpecialCityCost
         public async Task AddAsync(SpecialCityCostDTO DTO)
         {
             var citySettingExists = await _unitOfWork.GetRepository<CitySetting,int>()
@@ -47,6 +50,7 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCityCostServices
 
             await _unitOfWork.CompleteAsync();
         }
+        // Update SpecialCityCost
         public async Task UpdateAsync(SpecialCityCostDTO DTO)
         {
             var SpecialCityCostRepo =  _unitOfWork.GetRepository<SpecialCityCost,int>();
@@ -59,6 +63,7 @@ namespace ITI.Shipping.Core.Application.Services.SpecialCityCostServices
             SpecialCityCostRepo.UpdateAsync(existingSpecialCityCost);
             await _unitOfWork.CompleteAsync();
         }
+        // Delete SpecialCityCost
         public async Task DeleteAsync(int id)
         {
             var SpecialCityCostRepo =  _unitOfWork.GetRepository<SpecialCityCost,int>();

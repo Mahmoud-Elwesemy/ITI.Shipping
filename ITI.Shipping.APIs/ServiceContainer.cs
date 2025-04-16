@@ -17,9 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
 namespace ITI.Shipping.APIs;
-
 public static class ServiceContainer
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration Configuration)
